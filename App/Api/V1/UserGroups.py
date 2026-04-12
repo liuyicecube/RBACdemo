@@ -14,7 +14,7 @@ from App.Services.UserGroupService import UserGroupService
 from App.Dependencies.Database import get_db
 from App.Dependencies.Auth import get_current_user_and_tenant_id
 from App.Dependencies.Permission import permission_dependency
-from App.Utils.Logger import logger
+
 from App.Utils.Response import ResponseUtils
 
 

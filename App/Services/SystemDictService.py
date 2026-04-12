@@ -17,7 +17,6 @@ from App.Schemas.SystemDict import (
 from App.Core.Exceptions import ValidationException, NotFoundException
 from App.Utils.Cache import cache
 from App.Config.CacheKeys import (
-    SYSTEM_DICT_ALL,
     SYSTEM_DICT_BY_CODE,
     SYSTEM_DICT_ITEMS_BY_CODE,
     CACHE_EXPIRE_1_HOUR,

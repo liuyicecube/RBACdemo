@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, and_
+from sqlalchemy import or_
 from datetime import datetime
 from App.Models.UserSession import UserSessionModel
 from App.Repositories.Base import BaseRepository

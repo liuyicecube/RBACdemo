@@ -17,7 +17,7 @@ from App.Dependencies.Auth import get_current_user_and_tenant_id
 from App.Dependencies.Permission import permission_dependency
 from App.Utils.Logger import logger
 from App.Utils.Response import ResponseUtils
-from App.Config.Settings import settings
+from App.Utils.ConfigManager import ConfigManager
 
 
 router = APIRouter(
@@ -251,21 +251,21 @@ async def upload_avatar(
     try:
         current_user, tenant_id = current_user_with_tenant
         file_extension = file.filename.split(".")[-1].lower()
-        allowed_extensions = settings.allowed_image_extensions
-        if isinstance(allowed_extensions, str):
-            allowed_extensions = allowed_extensions.split(",")
+        allowed_extensions = ConfigManager.get_list(db, "allowed_image_extensions", tenant_id)
         if file_extension not in allowed_extensions:
             return ResponseUtils.error(message=f"不支持的文件类型，仅支持{','.join(allowed_extensions)}", code=400, error_code=40000)
 
         import os
         import uuid
         file_name = f"{uuid.uuid4()}.{file_extension}"
-        file_path = os.path.join(settings.upload_dir, file_name)
+        upload_dir = ConfigManager.get_str(db, "upload_dir", tenant_id, "./uploads")
+        file_path = os.path.join(upload_dir, file_name)
 
-        os.makedirs(settings.upload_dir, exist_ok=True)
+        os.makedirs(upload_dir, exist_ok=True)
 
         file_size = 0
         chunk_size = 1024 * 1024
+        max_file_size = ConfigManager.get_int(db, "max_file_size", tenant_id, 5242880)
 
         with open(file_path, "wb") as f:
             while True:
@@ -273,9 +273,9 @@ async def upload_avatar(
                 if not chunk:
                     break
                 file_size += len(chunk)
-                if file_size > settings.max_file_size:
+                if file_size > max_file_size:
                     os.remove(file_path)
-                    return ResponseUtils.error(message=f"文件大小超过限制，最大支持{settings.max_file_size/1024/1024}MB", code=400, error_code=40000)
+                    return ResponseUtils.error(message=f"文件大小超过限制，最大支持{max_file_size/1024/1024}MB", code=400, error_code=40000)
                 f.write(chunk)
 
         user_service = UserService(db)

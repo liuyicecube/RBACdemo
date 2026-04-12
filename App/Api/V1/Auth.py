@@ -2,7 +2,6 @@
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
-from typing import Dict, Any
 from fastapi.responses import JSONResponse
 from App.Schemas.Auth import (
     LoginRequest,

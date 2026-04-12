@@ -1,6 +1,6 @@
 """User Group Relation Repository"""
 
-from typing import List, Optional
+from typing import List
 from sqlalchemy.orm import Session
 from App.Models.UserGroupRelation import UserGroupRelationModel
 from App.Repositories.Base import BaseRepository

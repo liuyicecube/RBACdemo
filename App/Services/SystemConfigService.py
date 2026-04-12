@@ -1,18 +1,16 @@
 """System Config Service"""
 
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Optional, Tuple, Dict
 from sqlalchemy.orm import Session
 from App.Models.SystemConfig import SystemConfigModel
 from App.Repositories.SystemConfigRepository import SystemConfigRepository
 from App.Schemas.SystemConfig import (
     SystemConfigCreate,
-    SystemConfigUpdate,
-    SystemConfigResponse
+    SystemConfigUpdate
 )
 from App.Core.Exceptions import ValidationException, NotFoundException
 from App.Utils.Cache import cache
 from App.Config.CacheKeys import (
-    SYSTEM_CONFIG_ALL,
     SYSTEM_CONFIG_BY_KEY,
     CACHE_EXPIRE_12_HOURS
 )

@@ -8,7 +8,6 @@ from App.Repositories.OperationLogRepository import OperationLogRepository
 from App.Schemas.OperationLog import OperationLogCreate
 from App.Core.Exceptions import NotFoundException
 import json
-import hashlib
 
 
 class OperationLogService:

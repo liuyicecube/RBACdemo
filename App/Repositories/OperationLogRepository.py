@@ -1,8 +1,8 @@
 """Operation Log Repository"""
 
-from typing import List, Optional
+from typing import List
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, and_
+from sqlalchemy import or_
 from datetime import datetime, timedelta
 from App.Models.OperationLog import OperationLogModel
 from App.Repositories.Base import BaseRepository

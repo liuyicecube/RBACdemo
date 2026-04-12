@@ -1,2 +1,2 @@
-2026-04-12 17:30:02.128 | ERROR    | App.Main:custom_exception_handler:101 | - | - - Custom Exception: 缺少权限：log:view, Code: 40300
+2026-04-12 21:59:28.120 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：data_permission:view, Code: 40300
 

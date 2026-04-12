@@ -1,7 +1,6 @@
 """User Session Model"""
 
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Index
-from sqlalchemy.orm import relationship
 from App.Models.Base import BaseModel
 
 

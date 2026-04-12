@@ -6,7 +6,6 @@ from datetime import datetime
 from App.Models.UserSession import UserSessionModel
 from App.Core.Exceptions import ValidationException, NotFoundException
 from App.Repositories.UserSessionRepository import UserSessionRepository
-from App.Utils.Validators import Validators
 from App.Utils.Logger import logger
 from App.Utils.Cache import cache
 

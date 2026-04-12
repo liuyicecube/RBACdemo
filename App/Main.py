@@ -1,14 +1,12 @@
 """FastAPI Application Entry"""
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer
 from App.Config.Settings import settings
 from App.Core.Middleware import MiddlewareCore
 from App.Core.Exceptions import CustomException
 from App.Api.Routers import api_router
 from App.Utils.Logger import logger
-from App.Config.Database import engine, Base
 
 
 # 注意：不再使用 SQLAlchemy 自动创建表

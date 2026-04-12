@@ -1,0 +1,1929 @@
+{
+  "project_name": "Enterprise RBAC System",
+  "check_date": "2026-04-12 22:40:19",
+  "summary": {
+    "total_checks": 10,
+    "total_issues": 3,
+    "statistics": {
+      "结构正确": 10,
+      "Python文件数": 117,
+      "安全严重问题": 1,
+      "安全警告": 2,
+      "架构优点": 5,
+      "架构问题": 2,
+      "总代码行数": 15011,
+      "函数数量": 646,
+      "类数量": 184,
+      "API端点数": 72,
+      "自定义异常数": 6,
+      "测试问题": 1
+    }
+  },
+  "check_results": {
+    "项目结构": [
+      {
+        "type": "success",
+        "message": "目录存在: App/Api",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Config",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Core",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Dependencies",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Models",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Repositories",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Schemas",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Services",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: App/Utils",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "目录存在: scripts",
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "Python文件数量: 117",
+        "severity": "low"
+      }
+    ],
+    "安全性": [
+      {
+        "type": "error",
+        "message": "JWT密钥使用默认值，存在严重安全隐患",
+        "file": "App/Config/Settings.py",
+        "severity": "critical"
+      },
+      {
+        "type": "warning",
+        "message": ".env文件包含敏感信息，请确保不在版本控制中",
+        "file": ".env",
+        "severity": "high"
+      },
+      {
+        "type": "warning",
+        "message": "数据库凭据硬编码在配置文件中",
+        "file": "App/Config/Settings.py",
+        "severity": "high"
+      },
+      {
+        "type": "success",
+        "message": "使用JWT认证机制",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "使用bcrypt进行密码加密",
+        "severity": "low"
+      }
+    ],
+    "架构设计": [
+      {
+        "type": "success",
+        "message": "采用分层架构：API -> Service -> Repository -> Model",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "使用依赖注入模式",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "实现了Repository模式",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "使用Pydantic进行数据验证",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "API版本控制（V1）",
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "缺少Service层: UserProfiles, SystemConfigs, OperationLogs, Departments, DataPermissionRules, Permissions, UserGroups, Users, SystemDicts, Menus, UserSessions, Roles, AuditLogs",
+        "severity": "medium"
+      },
+      {
+        "type": "warning",
+        "message": "缺少Repository层: Auth",
+        "severity": "medium"
+      }
+    ],
+    "代码质量": [
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Config\\Database.py",
+        "line": 41,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(126字符)",
+        "file": "App\\Core\\Decorators.py",
+        "line": 78,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(229字符)",
+        "file": "App\\Core\\Middleware.py",
+        "line": 39,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Core\\Middleware.py",
+        "line": 40,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Repositories\\AuditLogRepository.py",
+        "line": 18,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Repositories\\AuditLogRepository.py",
+        "line": 25,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Repositories\\Base.py",
+        "line": 40,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(158字符)",
+        "file": "App\\Repositories\\Base.py",
+        "line": 47,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Repositories\\Base.py",
+        "line": 140,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(147字符)",
+        "file": "App\\Repositories\\Base.py",
+        "line": 171,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Repositories\\DataPermissionRuleRepository.py",
+        "line": 25,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Repositories\\DataPermissionRuleRepository.py",
+        "line": 33,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(139字符)",
+        "file": "App\\Repositories\\DataPermissionRuleRepository.py",
+        "line": 42,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Repositories\\DataPermissionRuleRepository.py",
+        "line": 106,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Repositories\\DepartmentRepository.py",
+        "line": 33,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Repositories\\MenuPermissionRepository.py",
+        "line": 16,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Repositories\\MenuPermissionRepository.py",
+        "line": 25,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Repositories\\MenuRepository.py",
+        "line": 33,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(142字符)",
+        "file": "App\\Repositories\\MenuRepository.py",
+        "line": 44,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Repositories\\MenuRepository.py",
+        "line": 55,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(130字符)",
+        "file": "App\\Repositories\\MenuRepository.py",
+        "line": 66,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(130字符)",
+        "file": "App\\Repositories\\MenuRepository.py",
+        "line": 145,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(150字符)",
+        "file": "App\\Repositories\\OperationLogRepository.py",
+        "line": 32,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Repositories\\OperationLogRepository.py",
+        "line": 99,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Repositories\\PermissionRepository.py",
+        "line": 25,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Repositories\\PermissionRepository.py",
+        "line": 34,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Repositories\\PermissionRepository.py",
+        "line": 43,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Repositories\\RolePermissionRepository.py",
+        "line": 34,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Repositories\\RolePermissionRepository.py",
+        "line": 77,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(130字符)",
+        "file": "App\\Repositories\\RoleRepository.py",
+        "line": 135,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(146字符)",
+        "file": "App\\Repositories\\SystemConfigRepository.py",
+        "line": 111,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(142字符)",
+        "file": "App\\Repositories\\SystemDictRepository.py",
+        "line": 81,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Repositories\\SystemDictRepository.py",
+        "line": 93,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(150字符)",
+        "file": "App\\Repositories\\SystemDictRepository.py",
+        "line": 170,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Repositories\\UserGroupRelationRepository.py",
+        "line": 16,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(131字符)",
+        "file": "App\\Repositories\\UserGroupRelationRepository.py",
+        "line": 25,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(140字符)",
+        "file": "App\\Repositories\\UserGroupRepository.py",
+        "line": 78,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Repositories\\UserGroupRoleRelationRepository.py",
+        "line": 16,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Repositories\\UserGroupRoleRelationRepository.py",
+        "line": 25,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Repositories\\UserSessionRepository.py",
+        "line": 42,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(126字符)",
+        "file": "App\\Repositories\\UserSessionRepository.py",
+        "line": 72,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(126字符)",
+        "file": "App\\Repositories\\UserSessionRepository.py",
+        "line": 171,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(153字符)",
+        "file": "App\\Services\\AuditLogService.py",
+        "line": 45,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(155字符)",
+        "file": "App\\Services\\AuthService.py",
+        "line": 97,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(143字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 36,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 38,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 40,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 42,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(145字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 44,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 46,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 52,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(127字符)",
+        "file": "App\\Services\\DataPermissionRuleService.py",
+        "line": 115,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Services\\DepartmentService.py",
+        "line": 43,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Services\\DepartmentService.py",
+        "line": 56,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Services\\DepartmentService.py",
+        "line": 118,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Services\\DepartmentService.py",
+        "line": 149,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Services\\DepartmentService.py",
+        "line": 201,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Services\\DepartmentService.py",
+        "line": 252,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(143字符)",
+        "file": "App\\Services\\MenuService.py",
+        "line": 45,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Services\\MenuService.py",
+        "line": 50,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Services\\MenuService.py",
+        "line": 52,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Services\\MenuService.py",
+        "line": 65,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Services\\MenuService.py",
+        "line": 67,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Services\\OperationLogService.py",
+        "line": 48,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Services\\OperationLogService.py",
+        "line": 56,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Services\\PermissionService.py",
+        "line": 46,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(141字符)",
+        "file": "App\\Services\\PermissionService.py",
+        "line": 53,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Services\\PermissionService.py",
+        "line": 55,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Services\\PermissionService.py",
+        "line": 57,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Services\\PermissionService.py",
+        "line": 74,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Services\\PermissionService.py",
+        "line": 151,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Services\\PermissionService.py",
+        "line": 252,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Services\\RoleService.py",
+        "line": 57,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Services\\RoleService.py",
+        "line": 270,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Services\\RoleService.py",
+        "line": 281,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Services\\RoleService.py",
+        "line": 300,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Services\\SystemConfigService.py",
+        "line": 88,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Services\\SystemDictService.py",
+        "line": 114,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Services\\SystemDictService.py",
+        "line": 193,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Services\\SystemDictService.py",
+        "line": 198,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Services\\UserGroupService.py",
+        "line": 102,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Services\\UserGroupService.py",
+        "line": 154,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Services\\UserGroupService.py",
+        "line": 193,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Services\\UserGroupService.py",
+        "line": 280,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(126字符)",
+        "file": "App\\Services\\UserProfileService.py",
+        "line": 88,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(126字符)",
+        "file": "App\\Services\\UserService.py",
+        "line": 51,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(127字符)",
+        "file": "App\\Services\\UserSessionService.py",
+        "line": 44,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Services\\UserSessionService.py",
+        "line": 52,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Services\\UserSessionService.py",
+        "line": 58,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Services\\UserSessionService.py",
+        "line": 128,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(125字符)",
+        "file": "App\\Utils\\CacheWarmup.py",
+        "line": 55,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(139字符)",
+        "file": "App\\Utils\\CacheWarmup.py",
+        "line": 61,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Utils\\ConfigManager.py",
+        "line": 61,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(264字符)",
+        "file": "App\\Utils\\Logger.py",
+        "line": 46,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(144字符)",
+        "file": "App\\Utils\\Logger.py",
+        "line": 55,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(157字符)",
+        "file": "App\\Utils\\Logger.py",
+        "line": 66,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(238字符)",
+        "file": "App\\Utils\\Logger.py",
+        "line": 77,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(125字符)",
+        "file": "App\\Api\\V1\\AuditLogs.py",
+        "line": 21,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\AuditLogs.py",
+        "line": 91,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Api\\V1\\AuditLogs.py",
+        "line": 113,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(157字符)",
+        "file": "App\\Api\\V1\\AuditLogs.py",
+        "line": 148,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Api\\V1\\AuditLogs.py",
+        "line": 192,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\Auth.py",
+        "line": 164,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 25,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 63,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 64,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(144字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 83,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(147字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 112,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 148,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(147字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 180,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(139字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 191,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(150字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 212,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(156字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 231,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(151字符)",
+        "file": "App\\Api\\V1\\DataPermissionRules.py",
+        "line": 260,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 62,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 63,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 133,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 134,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 162,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(151字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 200,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 262,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Departments.py",
+        "line": 336,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 24,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 63,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 64,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 83,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(127字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 126,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 148,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 186,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 222,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 233,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 259,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(141字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 281,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(145字符)",
+        "file": "App\\Api\\V1\\Menus.py",
+        "line": 310,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\OperationLogs.py",
+        "line": 21,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Api\\V1\\OperationLogs.py",
+        "line": 91,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\OperationLogs.py",
+        "line": 113,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Api\\V1\\OperationLogs.py",
+        "line": 152,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 71,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 72,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 154,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 155,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 183,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(151字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 226,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 271,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\Permissions.py",
+        "line": 375,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 26,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 57,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 58,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 77,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 103,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 136,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 168,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 179,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 200,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(141字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 219,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(146字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 248,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(146字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 273,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 284,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(140字符)",
+        "file": "App\\Api\\V1\\Roles.py",
+        "line": 296,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 24,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(130字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 60,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 61,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 157,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(126字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 179,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(125字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 180,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(125字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 215,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 249,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(139字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 284,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 306,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(141字符)",
+        "file": "App\\Api\\V1\\SystemConfigs.py",
+        "line": 336,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 26,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 106,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 158,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 189,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 221,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(140字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 243,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(139字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 276,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(142字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 309,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(139字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 331,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 353,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\SystemDicts.py",
+        "line": 354,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(142字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 63,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(141字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 64,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 138,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(137字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 139,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 168,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(151字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 205,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(136字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 269,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 330,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Api\\V1\\UserGroups.py",
+        "line": 413,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(148字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 22,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(125字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 47,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 49,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 50,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(138字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 63,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(125字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 87,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 89,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 90,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 100,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 111,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(150字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 130,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(151字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 141,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(140字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 160,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(159字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 170,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(153字符)",
+        "file": "App\\Api\\V1\\UserProfiles.py",
+        "line": 189,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(122字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 29,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(124字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 66,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 67,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 86,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(123字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 123,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(134字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 159,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 172,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(135字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 195,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(141字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 214,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(142字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 243,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(121字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 256,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(127字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 278,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(140字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 297,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(140字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 322,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(148字符)",
+        "file": "App\\Api\\V1\\Users.py",
+        "line": 342,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 62,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(153字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 63,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 64,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 66,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(132字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 67,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 111,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(152字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 112,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 153,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(153字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 154,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(133字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 155,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(125字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 200,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(149字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 201,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 202,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(129字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 204,
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "行过长(128字符)",
+        "file": "App\\Api\\V1\\UserSessions.py",
+        "line": 205,
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "总代码行数: 15011",
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "函数数量: 646",
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "类数量: 184",
+        "severity": "low"
+      }
+    ],
+    "数据库": [
+      {
+        "type": "success",
+        "message": "Model文件数: 19",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "存在Base基础模型",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "配置了数据库连接池",
+        "severity": "low"
+      }
+    ],
+    "API设计": [
+      {
+        "type": "success",
+        "message": "API端点数量: 72",
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "GET: 34 个端点",
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "DELETE: 10 个端点",
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "POST: 10 个端点",
+        "severity": "low"
+      },
+      {
+        "type": "info",
+        "message": "PUT: 18 个端点",
+        "severity": "low"
+      }
+    ],
+    "错误处理": [
+      {
+        "type": "success",
+        "message": "自定义异常类: CustomException, AuthenticationException, PermissionException, NotFoundException, ValidationException, ServerException",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "配置了全局异常处理器",
+        "severity": "low"
+      }
+    ],
+    "日志": [
+      {
+        "type": "success",
+        "message": "存在日志工具类",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "存在操作日志模型",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "存在审计日志模型",
+        "severity": "low"
+      }
+    ],
+    "配置管理": [
+      {
+        "type": "success",
+        "message": "存在.env.example模板文件",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "使用pydantic-settings进行配置管理",
+        "severity": "low"
+      },
+      {
+        "type": "success",
+        "message": "支持数据库系统配置",
+        "severity": "low"
+      }
+    ],
+    "测试": [
+      {
+        "type": "success",
+        "message": "存在tests目录",
+        "severity": "low"
+      },
+      {
+        "type": "warning",
+        "message": "未找到测试文件",
+        "severity": "medium"
+      },
+      {
+        "type": "info",
+        "message": "使用pytest测试框架",
+        "severity": "low"
+      }
+    ]
+  },
+  "issues": [
+    "[CRITICAL] JWT密钥使用默认值，存在严重安全隐患 in App/Config/Settings.py",
+    "[WARNING] .env文件包含敏感信息，请确保不在版本控制中 in .env",
+    "[WARNING] 数据库凭据硬编码在配置文件中 in App/Config/Settings.py"
+  ]
+}

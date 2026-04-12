@@ -2,8 +2,8 @@
 
 from typing import List, Optional, TypeVar, Generic, Any
 from datetime import datetime
-from sqlalchemy.orm import Session, selectinload, joinedload
-from sqlalchemy import func, select
+from sqlalchemy.orm import Session, selectinload
+from sqlalchemy import func
 from App.Models.Base import BaseModel
 
 # 创建泛型类型

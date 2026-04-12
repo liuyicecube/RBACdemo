@@ -1,6 +1,6 @@
 """Menu Permission Repository"""
 
-from typing import List, Optional
+from typing import List
 from sqlalchemy.orm import Session
 from App.Models.MenuPermission import MenuPermissionModel
 from App.Repositories.Base import BaseRepository

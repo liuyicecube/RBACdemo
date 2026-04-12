@@ -7,7 +7,6 @@ from App.Core.Exceptions import ValidationException, NotFoundException
 from App.Repositories.DataPermissionRuleRepository import DataPermissionRuleRepository
 from App.Utils.Validators import Validators
 from App.Utils.Logger import logger
-from App.Utils.Cache import cache
 
 
 class DataPermissionRuleService:

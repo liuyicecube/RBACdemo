@@ -1,12 +1,10 @@
 """Middleware Core"""
 
-from fastapi import Request, Response
+from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Callable
 from App.Config.Settings import settings
 from App.Core.Security import SecurityCore
 from App.Utils.Response import ResponseUtils
-
 
 
 class MiddlewareCore:
@@ -24,7 +22,7 @@ class MiddlewareCore:
         )
 
     @staticmethod
-    async def authentication_middleware(request: Request, call_next: Callable) -> Response:
+    async def authentication_middleware(request: Request, call_next):
         """认证中间件"""
         print(f"[AuthMiddleware] Processing request: method={request.method}, path={request.url.path}")
 
@@ -109,7 +107,7 @@ class MiddlewareCore:
         return response
 
     @staticmethod
-    async def logging_middleware(request: Request, call_next: Callable) -> Response:
+    async def logging_middleware(request: Request, call_next):
         """日志中间件"""
         import time
         import uuid
@@ -124,6 +122,18 @@ class MiddlewareCore:
 
         # 记录请求开始时间
         start_time = time.time()
+
+        # 跳过日志记录的路径
+        skip_log_paths = [
+            "/", "/health", "/docs", "/redoc", "/openapi.json",
+            "/favicon.ico", "/vite.svg", "/static", "/assets"
+        ]
+        
+        should_log_db = True
+        for path in skip_log_paths:
+            if request.url.path.startswith(path):
+                should_log_db = False
+                break
 
         # 确保所有必要字段存在
         extra = {
@@ -140,33 +150,58 @@ class MiddlewareCore:
         )
 
         # 处理请求
-        response = await call_next(request)
+        error_message = None
+        response_status_code = 200
+        
+        try:
+            response = await call_next(request)
+            response_status_code = response.status_code
+        except Exception as e:
+            error_message = str(e)
+            import traceback
+            error_message += "\n" + traceback.format_exc()
+            response_status_code = 500
+            raise
+        finally:
+            # 计算响应时间
+            response_time = time.time() - start_time
+            execution_time_ms = round(response_time * 1000, 2)
 
-        # 计算响应时间
-        response_time = time.time() - start_time
+            # 记录性能日志
+            LoggerUtils.log_performance(
+                request_id=request_id,
+                user_id=str(user_id),
+                endpoint=request.url.path,
+                method=request.method,
+                status_code=response_status_code,
+                response_time=response_time
+            )
 
-        # 记录性能日志
-        LoggerUtils.log_performance(
-            request_id=request_id,
-            user_id=str(user_id),
-            endpoint=request.url.path,
-            method=request.method,
-            status_code=response.status_code,
-            response_time=response_time
-        )
+            if should_log_db:
+                try:
+                    from App.Utils.OperationLog import OperationLogUtils
+                    await OperationLogUtils.log_operation(
+                        request=request,
+                        response_status_code=response_status_code,
+                        execution_time_ms=execution_time_ms,
+                        response_body=None,
+                        error_message=error_message
+                    )
+                except Exception as log_err:
+                    print(f"[Middleware] Failed to log to DB: {log_err}")
 
-        # 确保所有必要字段存在
-        extra = {
-            "request_id": request_id,
-            "user_id": user_id,
-            "status_code": response.status_code,
-            "response_time": round(response_time * 1000, 2)
-        }
+            # 确保所有必要字段存在
+            extra = {
+                "request_id": request_id,
+                "user_id": user_id,
+                "status_code": response_status_code,
+                "response_time": execution_time_ms
+            }
 
-        # 记录响应信息
-        logger.info(
-            f"Response sent",
-            **extra
-        )
+            # 记录响应信息
+            logger.info(
+                f"Response sent",
+                **extra
+            )
 
         return response
