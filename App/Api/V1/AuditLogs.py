@@ -66,9 +66,10 @@ def get_audit_logs(
                 "table_name": log.table_name,
                 "record_id": log.record_id,
                 "operation_type": log.operation_type,
+                "field_name": log.field_name,
                 "old_value": log.old_value,
                 "new_value": log.new_value,
-                "change_fields": log.change_fields,
+                "change_reason": log.change_reason,
                 "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
             })
 
@@ -129,9 +130,10 @@ def get_audit_log(
             "table_name": log.table_name,
             "record_id": log.record_id,
             "operation_type": log.operation_type,
+            "field_name": log.field_name,
             "old_value": log.old_value,
             "new_value": log.new_value,
-            "change_fields": log.change_fields,
+            "change_reason": log.change_reason,
             "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
         }
 
@@ -167,9 +169,10 @@ def get_record_change_history(
                 "user_id": log.user_id,
                 "username": log.username,
                 "operation_type": log.operation_type,
+                "field_name": log.field_name,
                 "old_value": log.old_value,
                 "new_value": log.new_value,
-                "change_fields": log.change_fields,
+                "change_reason": log.change_reason,
                 "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
             })
 

@@ -4,12 +4,15 @@ from fastapi import APIRouter
 from App.Api.V1 import (
     Auth, Users, Roles, Permissions, Departments, Menus, Metrics,
     SystemDicts, SystemConfigs, OperationLogs, AuditLogs, UserGroups,
-    DataPermissionRules, UserSessions, UserProfiles
+    DataPermissionRules, UserSessions, UserProfiles, Health
 )
 
 
 # 创建V1版本的API路由
 api_v1_router = APIRouter(prefix="/v1")
+
+# 注册健康检查路由（放在最前面）
+api_v1_router.include_router(Health.router)
 
 # 注册认证路由
 api_v1_router.include_router(Auth.router)

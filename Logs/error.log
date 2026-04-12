@@ -1,2 +1,32 @@
 2026-04-12 21:59:28.120 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：data_permission:view, Code: 40300
 
+2026-04-13 00:46:58.557 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 用户名或密码错误, Code: 40100
+
+2026-04-13 00:48:03.429 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：user:view, Code: 40300
+
+2026-04-13 00:48:11.221 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：role:view, Code: 40300
+
+2026-04-13 00:48:19.434 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：permission:view, Code: 40300
+
+2026-04-13 00:58:54.252 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：permission:view, Code: 40300
+
+2026-04-13 00:59:23.981 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 用户名或密码错误, Code: 40100
+
+2026-04-13 00:59:36.806 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 用户名或密码错误, Code: 40100
+
+2026-04-13 00:59:53.816 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 用户名或密码错误, Code: 40100
+
+2026-04-13 01:00:15.320 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：user:view, Code: 40300
+
+2026-04-13 01:02:29.937 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：role:view, Code: 40300
+
+2026-04-13 01:09:55.169 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：user:view, Code: 40300
+
+2026-04-13 01:11:15.165 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 用户名或密码错误, Code: 40100
+
+2026-04-13 01:11:38.556 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 用户名或密码错误, Code: 40100
+
+2026-04-13 01:12:15.505 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：user:view, Code: 40300
+
+2026-04-13 01:15:31.157 | ERROR    | App.Main:custom_exception_handler:99 | - | - - Custom Exception: 缺少权限：user:view, Code: 40300
+

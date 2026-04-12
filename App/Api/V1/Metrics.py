@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, Depends
 from App.Dependencies.Auth import get_current_user
-from App.Utils.Cache import cache
+from App.Services.MetricsService import MetricsService
 from App.Utils.Response import ResponseUtils
 
 
@@ -23,7 +23,9 @@ def get_cache_metrics(current_user: dict = Depends(get_current_user)):
     - **total_requests**: 总请求次数
     - **hit_rate**: 缓存命中率（百分比）
     """
-    return ResponseUtils.success(data=cache.get_stats(), message="获取缓存统计信息成功")
+    metrics_service = MetricsService()
+    data = metrics_service.get_cache_metrics()
+    return ResponseUtils.success(data=data, message="获取缓存统计信息成功")
 
 
 @router.get("/cache/reset", summary="重置缓存统计信息")
@@ -36,7 +38,6 @@ def reset_cache_metrics(current_user: dict = Depends(get_current_user)):
     返回：
     - **message**: 操作结果消息
     """
-    # 重置缓存统计信息
-    cache.hit_count = 0
-    cache.miss_count = 0
+    metrics_service = MetricsService()
+    metrics_service.reset_cache_metrics()
     return ResponseUtils.success(message="缓存统计信息已重置")

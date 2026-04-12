@@ -13,10 +13,10 @@ class Settings(BaseSettings):
     app_debug: bool = True
 
     # 数据库配置
-    database_url: str = "mysql+pymysql://root:1124@192.168.99.220:3306/lydata?charset=utf8mb4"
+    database_url: str = ""
 
     # JWT配置
-    jwt_secret_key: str = "your-secret-key-here"
+    jwt_secret_key: str = ""
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_minutes: int = 30
     jwt_refresh_token_expire_days: int = 7

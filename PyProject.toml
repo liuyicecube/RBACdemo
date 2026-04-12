@@ -1,104 +1,52 @@
 [tool.poetry]
 name = "enterprise-rbac-system"
 version = "1.0.0"
-description = "Enterprise RBAC System based on FastAPI"
-authors = ["Your Name <your.email@example.com>"]
-readme = "ReadMe.Md"
-packages = [{ include = "App", from = "." }]
+description = "Enterprise RBAC System Backend"
+authors = ["Your Name <your@email.com>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.104.0"
-uvicorn = "^0.24.0"
+uvicorn = {extras = ["standard"], version = "^0.24.0"}
 sqlalchemy = "^2.0.0"
-pymysql = "^1.1.0"
-alembic = "^1.13.0"
-pydantic = "^2.5.0"
-pydantic-settings = "^2.1.0"
-jose = "^3.3.0"
-passlib = "^1.7.4"
-bcrypt = "^4.1.2"
+alembic = "^1.12.0"
+pydantic = "^2.0.0"
+pydantic-settings = "^2.0.0"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.0"}
 python-multipart = "^0.0.6"
-redis = "^5.0.0"
+pymysql = "^1.1.0"
+cryptography = "^41.0.0"
 python-dotenv = "^1.0.0"
-loguru = "^0.7.2"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
+pytest-asyncio = "^0.21.0"
 httpx = "^0.25.0"
-black = "^23.12.0"
+black = "^23.0.0"
+flake8 = "^6.0.0"
 isort = "^5.12.0"
-flake8 = "^6.1.0"
-mypy = "^1.8.0"
-sphinx = "^7.2.0"
-sphinx-rtd-theme = "^2.0.0"
+mypy = "^1.6.0"
+
+[tool.black]
+line-length = 120
+target-version = ['py310', 'py311', 'py312']
+
+[tool.isort]
+profile = "black"
+line-length = 120
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = ["E203", "W503"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.pytest.ini_options]
-testpaths = ["Tests"]
-python_files = ["test_*.py", "Test*.py"]
-python_classes = "Test*"
-python_functions = "test_*"
-addopts = "--strict-markers --tb=short"
-markers = [
-    "auth: Authentication related tests",
-    "users: User management related tests",
-    "validation: Data validation tests",
-    "error: Error handling tests",
-    "performance: Performance testing",
-    "concurrency: Concurrency testing",
-]
-
-[tool.coverage.run]
-source = ["App"]
-omit = [
-    "App/Tests/*",
-    "App/__init__.py",
-    "*/site-packages/*",
-]
-
-[tool.coverage.report]
-show_missing = true
-skip_covered = false
-precision = 2
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "if __name__ == .__main__.:",
-    "raise NotImplementedError",
-]
-
-[tool.black]
-line-length = 88
-target-version = ["py310"]
-include = '\.pyi?$'
-exclude = '/(\.git|\.venv|build|dist)/'
-
-[tool.isort]
-profile = "black"
-line_length = 88
-exclude = ['.venv', 'build', 'dist']
-
-[tool.mypy]
-python_version = "3.10"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
-
-[tool.flake8]
-max-line-length = 88
-extend-ignore = ["E203", "W503"]
-exclude = [".git", ".venv", "build", "dist", "__pycache__"]

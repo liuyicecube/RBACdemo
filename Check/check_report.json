@@ -1,22 +1,21 @@
 {
   "project_name": "Enterprise RBAC System",
-  "check_date": "2026-04-12 22:40:19",
+  "check_date": "2026-04-12 23:47:04",
   "summary": {
     "total_checks": 10,
-    "total_issues": 3,
+    "total_issues": 1,
     "statistics": {
       "结构正确": 10,
-      "Python文件数": 117,
-      "安全严重问题": 1,
-      "安全警告": 2,
+      "Python文件数": 119,
+      "安全警告": 1,
       "架构优点": 5,
       "架构问题": 2,
-      "总代码行数": 15011,
-      "函数数量": 646,
-      "类数量": 184,
-      "API端点数": 72,
-      "自定义异常数": 6,
-      "测试问题": 1
+      "总代码行数": 15234,
+      "函数数量": 664,
+      "类数量": 195,
+      "API端点数": 74,
+      "自定义异常数": 16,
+      "测试文件数": 6
     }
   },
   "check_results": {
@@ -73,27 +72,15 @@
       },
       {
         "type": "info",
-        "message": "Python文件数量: 117",
+        "message": "Python文件数量: 119",
         "severity": "low"
       }
     ],
     "安全性": [
       {
-        "type": "error",
-        "message": "JWT密钥使用默认值，存在严重安全隐患",
-        "file": "App/Config/Settings.py",
-        "severity": "critical"
-      },
-      {
         "type": "warning",
         "message": ".env文件包含敏感信息，请确保不在版本控制中",
         "file": ".env",
-        "severity": "high"
-      },
-      {
-        "type": "warning",
-        "message": "数据库凭据硬编码在配置文件中",
-        "file": "App/Config/Settings.py",
         "severity": "high"
       },
       {
@@ -135,12 +122,12 @@
       },
       {
         "type": "warning",
-        "message": "缺少Service层: UserProfiles, SystemConfigs, OperationLogs, Departments, DataPermissionRules, Permissions, UserGroups, Users, SystemDicts, Menus, UserSessions, Roles, AuditLogs",
+        "message": "缺少Service层: OperationLogs, DataPermissionRules, SystemDicts, Roles, Users, AuditLogs, Permissions, Departments, UserProfiles, Health, Menus, SystemConfigs, UserSessions, UserGroups",
         "severity": "medium"
       },
       {
         "type": "warning",
-        "message": "缺少Repository层: Auth",
+        "message": "缺少Repository层: Auth, Metrics",
         "severity": "medium"
       }
     ],
@@ -1799,17 +1786,17 @@
       },
       {
         "type": "info",
-        "message": "总代码行数: 15011",
+        "message": "总代码行数: 15234",
         "severity": "low"
       },
       {
         "type": "info",
-        "message": "函数数量: 646",
+        "message": "函数数量: 664",
         "severity": "low"
       },
       {
         "type": "info",
-        "message": "类数量: 184",
+        "message": "类数量: 195",
         "severity": "low"
       }
     ],
@@ -1833,12 +1820,12 @@
     "API设计": [
       {
         "type": "success",
-        "message": "API端点数量: 72",
+        "message": "API端点数量: 74",
         "severity": "low"
       },
       {
         "type": "info",
-        "message": "GET: 34 个端点",
+        "message": "GET: 36 个端点",
         "severity": "low"
       },
       {
@@ -1860,7 +1847,7 @@
     "错误处理": [
       {
         "type": "success",
-        "message": "自定义异常类: CustomException, AuthenticationException, PermissionException, NotFoundException, ValidationException, ServerException",
+        "message": "自定义异常类: CustomException, AuthenticationException, TokenExpiredException, TokenInvalidException, PermissionException, NotFoundException, UserNotFoundException, RoleNotFoundException, ValidationException, DuplicateException, UserAlreadyExistsException, RoleAlreadyExistsException, RateLimitException, ServerException, DatabaseException, CacheException",
         "severity": "low"
       },
       {
@@ -1910,9 +1897,9 @@
         "severity": "low"
       },
       {
-        "type": "warning",
-        "message": "未找到测试文件",
-        "severity": "medium"
+        "type": "success",
+        "message": "测试文件数量: 6",
+        "severity": "low"
       },
       {
         "type": "info",
@@ -1922,8 +1909,6 @@
     ]
   },
   "issues": [
-    "[CRITICAL] JWT密钥使用默认值，存在严重安全隐患 in App/Config/Settings.py",
-    "[WARNING] .env文件包含敏感信息，请确保不在版本控制中 in .env",
-    "[WARNING] 数据库凭据硬编码在配置文件中 in App/Config/Settings.py"
+    "[WARNING] .env文件包含敏感信息，请确保不在版本控制中 in .env"
   ]
 }
