@@ -128,3 +128,29 @@
 2026-04-12 01:00:28.319 | INFO     | App.Core.Middleware:logging_middleware:137 | 6ea29149-4c6e-45c8-ac94-d1501737814e | - - Request received
 2026-04-12 01:00:28.328 | INFO     | App.Utils.Logger:log_performance:110 | 6ea29149-4c6e-45c8-ac94-d1501737814e | - - Performance log
 2026-04-12 01:00:28.328 | INFO     | App.Core.Middleware:logging_middleware:167 | 6ea29149-4c6e-45c8-ac94-d1501737814e | - - Response sent
+2026-04-12 16:55:55.150 | INFO     | App.Core.Middleware:logging_middleware:137 | 0f005d2b-7962-481b-856c-913277f55a88 | - - Request received
+2026-04-12 16:55:55.387 | INFO     | App.Utils.Logger:log_performance:110 | 0f005d2b-7962-481b-856c-913277f55a88 | - - Performance log
+2026-04-12 16:55:55.388 | INFO     | App.Core.Middleware:logging_middleware:167 | 0f005d2b-7962-481b-856c-913277f55a88 | - - Response sent
+2026-04-12 16:55:55.495 | INFO     | App.Core.Middleware:logging_middleware:137 | d21cf1e2-3a6d-4c09-90b8-cccba785db8a | - - Request received
+2026-04-12 16:55:55.598 | INFO     | App.Utils.Logger:log_performance:110 | d21cf1e2-3a6d-4c09-90b8-cccba785db8a | - - Performance log
+2026-04-12 16:55:55.599 | INFO     | App.Core.Middleware:logging_middleware:167 | d21cf1e2-3a6d-4c09-90b8-cccba785db8a | - - Response sent
+2026-04-12 17:24:00.304 | INFO     | App.Core.Middleware:logging_middleware:137 | d439dc87-0373-4383-9dd3-cb0b116a1adf | - - Request received
+2026-04-12 17:24:00.309 | INFO     | App.Utils.Logger:log_performance:110 | d439dc87-0373-4383-9dd3-cb0b116a1adf | - - Performance log
+2026-04-12 17:24:00.310 | INFO     | App.Core.Middleware:logging_middleware:167 | d439dc87-0373-4383-9dd3-cb0b116a1adf | - - Response sent
+2026-04-12 17:24:00.401 | INFO     | App.Core.Middleware:logging_middleware:137 | 22440c91-27a7-4b14-8d54-aa592d5e11d6 | - - Request received
+2026-04-12 17:24:00.518 | INFO     | App.Utils.Logger:log_performance:110 | 22440c91-27a7-4b14-8d54-aa592d5e11d6 | - - Performance log
+2026-04-12 17:24:00.518 | INFO     | App.Core.Middleware:logging_middleware:167 | 22440c91-27a7-4b14-8d54-aa592d5e11d6 | - - Response sent
+2026-04-12 17:24:16.059 | INFO     | App.Core.Middleware:logging_middleware:137 | 2f2153d5-fa52-4c0d-bc33-61d9cfb1936b | - - Request received
+2026-04-12 17:24:26.075 | INFO     | App.Utils.Logger:log_performance:110 | 2f2153d5-fa52-4c0d-bc33-61d9cfb1936b | - - Performance log
+2026-04-12 17:24:26.076 | INFO     | App.Core.Middleware:logging_middleware:167 | 2f2153d5-fa52-4c0d-bc33-61d9cfb1936b | - - Response sent
+2026-04-12 17:29:36.095 | INFO     | App.Core.Middleware:logging_middleware:137 | e880e032-fdb3-420c-ad28-982ca300f0b4 | - - Request received
+2026-04-12 17:29:36.555 | INFO     | App.Services.AuthService:login:49 | - | - - 用户 admin 登录成功，IP: 127.0.0.1
+2026-04-12 17:29:36.557 | INFO     | App.Utils.Logger:log_performance:110 | e880e032-fdb3-420c-ad28-982ca300f0b4 | - - Performance log
+2026-04-12 17:29:36.558 | INFO     | App.Core.Middleware:logging_middleware:167 | e880e032-fdb3-420c-ad28-982ca300f0b4 | - - Response sent
+2026-04-12 17:29:53.221 | INFO     | App.Core.Middleware:logging_middleware:137 | 7e7d9ba3-4669-444b-ab9d-c4deccb89ca9 | - - Request received
+2026-04-12 17:29:53.337 | INFO     | App.Utils.Logger:log_performance:110 | 7e7d9ba3-4669-444b-ab9d-c4deccb89ca9 | - - Performance log
+2026-04-12 17:29:53.338 | INFO     | App.Core.Middleware:logging_middleware:167 | 7e7d9ba3-4669-444b-ab9d-c4deccb89ca9 | - - Response sent
+2026-04-12 17:30:02.109 | INFO     | App.Core.Middleware:logging_middleware:137 | c0ff2395-fb1b-4d15-9793-34c46b271a74 | - - Request received
+2026-04-12 17:30:02.128 | ERROR    | App.Main:custom_exception_handler:101 | - | - - Custom Exception: 缺少权限：log:view, Code: 40300
+2026-04-12 17:30:02.130 | INFO     | App.Utils.Logger:log_performance:110 | c0ff2395-fb1b-4d15-9793-34c46b271a74 | - - Performance log
+2026-04-12 17:30:02.131 | INFO     | App.Core.Middleware:logging_middleware:167 | c0ff2395-fb1b-4d15-9793-34c46b271a74 | - - Response sent

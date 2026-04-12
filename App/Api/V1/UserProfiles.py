@@ -30,10 +30,10 @@ def get_user_profile_by_user_id(
         current_user, tenant_id = current_user_with_tenant
         profile_service = UserProfileService(db)
         profile = profile_service.get_profile_by_user_id(user_id, tenant_id=tenant_id)
-        
+
         if not profile:
             return ResponseUtils.success(data=None, message="用户资料不存在")
-        
+
         profile_info = {
             "id": profile.id,
             "user_id": profile.user_id,
@@ -49,7 +49,7 @@ def get_user_profile_by_user_id(
             "create_time": profile.create_time.isoformat() if hasattr(profile.create_time, 'isoformat') else profile.create_time,
             "update_time": profile.update_time.isoformat() if hasattr(profile.update_time, 'isoformat') else profile.update_time
         }
-        
+
         return ResponseUtils.success(data=profile_info, message="获取用户资料成功")
     except HTTPException as e:
         raise e
@@ -70,10 +70,10 @@ def get_my_profile(
         current_user, tenant_id = current_user_with_tenant
         profile_service = UserProfileService(db)
         profile = profile_service.get_profile_by_user_id(current_user.id, tenant_id=tenant_id)
-        
+
         if not profile:
             return ResponseUtils.success(data=None, message="用户资料不存在")
-        
+
         profile_info = {
             "id": profile.id,
             "user_id": profile.user_id,
@@ -89,7 +89,7 @@ def get_my_profile(
             "create_time": profile.create_time.isoformat() if hasattr(profile.create_time, 'isoformat') else profile.create_time,
             "update_time": profile.update_time.isoformat() if hasattr(profile.update_time, 'isoformat') else profile.update_time
         }
-        
+
         return ResponseUtils.success(data=profile_info, message="获取用户资料成功")
     except HTTPException as e:
         raise e
@@ -107,16 +107,16 @@ def create_user_profile(
     try:
         current_user, tenant_id = current_user_with_tenant
         profile_service = UserProfileService(db)
-        
+
         profile = profile_service.create_profile(profile_data.model_dump(), tenant_id=tenant_id, created_by=current_user.id)
-        
+
         profile_info = {
             "id": profile.id,
             "user_id": profile.user_id,
             "gender": profile.gender,
             "position": profile.position
         }
-        
+
         return ResponseUtils.success(data=profile_info, message="创建用户资料成功")
     except HTTPException as e:
         raise e
@@ -139,14 +139,14 @@ def update_user_profile(
         current_user, tenant_id = current_user_with_tenant
         profile_service = UserProfileService(db)
         profile = profile_service.update_profile(user_id, profile_data.model_dump(exclude_unset=True), tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         profile_info = {
             "id": profile.id,
             "user_id": profile.user_id,
             "gender": profile.gender,
             "position": profile.position
         }
-        
+
         return ResponseUtils.success(data=profile_info, message="更新用户资料成功")
     except HTTPException as e:
         raise e
@@ -168,14 +168,14 @@ def update_my_profile(
         current_user, tenant_id = current_user_with_tenant
         profile_service = UserProfileService(db)
         profile = profile_service.update_profile(current_user.id, profile_data.model_dump(exclude_unset=True), tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         profile_info = {
             "id": profile.id,
             "user_id": profile.user_id,
             "gender": profile.gender,
             "position": profile.position
         }
-        
+
         return ResponseUtils.success(data=profile_info, message="更新用户资料成功")
     except HTTPException as e:
         raise e
@@ -197,7 +197,7 @@ def delete_user_profile(
         current_user, tenant_id = current_user_with_tenant
         profile_service = UserProfileService(db)
         profile_service.delete_profile_by_user_id(user_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除用户资料成功")
     except HTTPException as e:
         raise e

@@ -14,9 +14,9 @@ router = APIRouter(prefix="/metrics", tags=["监控"])
 def get_cache_metrics(current_user: dict = Depends(get_current_user)):
     """
     获取缓存统计信息，包括命中率、请求数等
-    
+
     - **current_user**: 当前登录用户（自动注入）
-    
+
     返回：
     - **hit_count**: 缓存命中次数
     - **miss_count**: 缓存未命中次数
@@ -30,9 +30,9 @@ def get_cache_metrics(current_user: dict = Depends(get_current_user)):
 def reset_cache_metrics(current_user: dict = Depends(get_current_user)):
     """
     重置缓存统计信息
-    
+
     - **current_user**: 当前登录用户（自动注入）
-    
+
     返回：
     - **message**: 操作结果消息
     """

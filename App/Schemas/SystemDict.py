@@ -36,7 +36,7 @@ class SystemDictItemResponse(SystemDictItemBase):
     status: int = Field(..., ge=0, le=1, description="状态(0:禁用,1:启用)")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -70,7 +70,7 @@ class SystemDictResponse(SystemDictBase):
     status: int = Field(..., ge=0, le=1, description="状态(0:禁用,1:启用)")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -79,7 +79,7 @@ class SystemDictResponse(SystemDictBase):
 class SystemDictWithItemsResponse(SystemDictResponse):
     """字典带字典项响应模型"""
     items: List[SystemDictItemResponse] = Field([], description="字典项列表")
-    
+
     model_config = {
         "from_attributes": True
     }

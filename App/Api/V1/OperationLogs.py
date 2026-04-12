@@ -35,14 +35,14 @@ def get_operation_logs(
     try:
         current_user, tenant_id = current_user_with_tenant
         log_service = OperationLogService(db)
-        
+
         start_datetime = None
         end_datetime = None
         if start_time:
             start_datetime = datetime.fromisoformat(start_time)
         if end_time:
             end_datetime = datetime.fromisoformat(end_time)
-        
+
         total, logs = log_service.paginate_logs(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -54,7 +54,7 @@ def get_operation_logs(
             page=page,
             page_size=page_size
         )
-        
+
         log_list = []
         for log in logs:
             log_list.append({
@@ -71,7 +71,7 @@ def get_operation_logs(
                 "execution_time": log.execution_time,
                 "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
             })
-        
+
         return ResponseUtils.pagination(
             data=log_list,
             total=total,
@@ -99,7 +99,7 @@ def get_operation_log_statistics(
         current_user, tenant_id = current_user_with_tenant
         log_service = OperationLogService(db)
         statistics = log_service.get_statistics(tenant_id, days)
-        
+
         return ResponseUtils.success(data=statistics, message="获取操作日志统计成功")
     except HTTPException as e:
         raise e
@@ -121,7 +121,7 @@ def get_operation_log(
         current_user, tenant_id = current_user_with_tenant
         log_service = OperationLogService(db)
         log = log_service.get_log_by_id(log_id, tenant_id=tenant_id)
-        
+
         log_info = {
             "id": log.id,
             "user_id": log.user_id,
@@ -138,7 +138,7 @@ def get_operation_log(
             "execution_time": log.execution_time,
             "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
         }
-        
+
         return ResponseUtils.success(data=log_info, message="获取操作日志详情成功")
     except HTTPException as e:
         raise e
@@ -160,7 +160,7 @@ def cleanup_old_logs(
         current_user, tenant_id = current_user_with_tenant
         log_service = OperationLogService(db)
         log_service.delete_old_logs(days, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="清理旧日志成功")
     except HTTPException as e:
         raise e

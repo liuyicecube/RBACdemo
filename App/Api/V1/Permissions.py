@@ -21,7 +21,12 @@ router = APIRouter(
 )
 
 
-@router.get("", response_model=AuthResponse, summary="获取权限列表", dependencies=[Depends(permission_dependency("permission:view"))])
+@router.get(
+    "",
+    response_model=AuthResponse,
+    summary="获取权限列表",
+    dependencies=[Depends(permission_dependency("permission:view"))]
+)
 def get_permissions(
     keyword: str = None,
     type: int = None,
@@ -38,7 +43,7 @@ def get_permissions(
     try:
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
-        
+
         total, permissions = permission_service.paginate_permissions(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -47,7 +52,7 @@ def get_permissions(
             page=page,
             page_size=page_size
         )
-        
+
         permission_list = []
         for perm in permissions:
             permission_list.append({
@@ -66,7 +71,7 @@ def get_permissions(
                 "create_time": perm.create_time.isoformat() if hasattr(perm.create_time, 'isoformat') else perm.create_time,
                 "update_time": perm.update_time.isoformat() if hasattr(perm.update_time, 'isoformat') else perm.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=permission_list,
             total=total,
@@ -83,7 +88,12 @@ def get_permissions(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/all", response_model=AuthResponse, summary="获取所有启用的权限（用于分配）", dependencies=[Depends(permission_dependency("permission:view"))])
+@router.get(
+    "/all",
+    response_model=AuthResponse,
+    summary="获取所有启用的权限（用于分配）",
+    dependencies=[Depends(permission_dependency("permission:view"))]
+)
 def get_all_active_permissions(
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
     db: Session = Depends(get_db)
@@ -93,7 +103,7 @@ def get_all_active_permissions(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         permissions = permission_service.get_all_active_permissions(tenant_id=tenant_id)
-        
+
         permission_list = []
         for perm in permissions:
             permission_list.append({
@@ -103,7 +113,7 @@ def get_all_active_permissions(
                 "type": perm.type,
                 "parent_id": perm.parent_id
             })
-        
+
         return ResponseUtils.success(data=permission_list, message="获取所有启用的权限成功")
     except HTTPException as e:
         raise e
@@ -111,7 +121,12 @@ def get_all_active_permissions(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{permission_id}", response_model=AuthResponse, summary="获取权限详情", dependencies=[Depends(permission_dependency("permission:view"))])
+@router.get(
+    "/{permission_id}",
+    response_model=AuthResponse,
+    summary="获取权限详情",
+    dependencies=[Depends(permission_dependency("permission:view"))]
+)
 def get_permission(
     permission_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -122,7 +137,7 @@ def get_permission(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         permission = permission_service.get_permission_by_id(permission_id, tenant_id=tenant_id)
-        
+
         permission_info = {
             "id": permission.id,
             "name": permission.name,
@@ -139,7 +154,7 @@ def get_permission(
             "create_time": permission.create_time.isoformat() if hasattr(permission.create_time, 'isoformat') else permission.create_time,
             "update_time": permission.update_time.isoformat() if hasattr(permission.update_time, 'isoformat') else permission.update_time
         }
-        
+
         return ResponseUtils.success(data=permission_info, message="获取权限详情成功")
     except HTTPException as e:
         raise e
@@ -150,7 +165,12 @@ def get_permission(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.post("", response_model=AuthResponse, summary="创建权限", dependencies=[Depends(permission_dependency("permission:create"))])
+@router.post(
+    "",
+    response_model=AuthResponse,
+    summary="创建权限",
+    dependencies=[Depends(permission_dependency("permission:create"))]
+)
 def create_permission(
     permission_data: PermissionCreate,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -161,7 +181,7 @@ def create_permission(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         permission = permission_service.create_permission(permission_data.model_dump(), tenant_id=tenant_id, created_by=current_user.id)
-        
+
         permission_info = {
             "id": permission.id,
             "name": permission.name,
@@ -176,7 +196,7 @@ def create_permission(
             "level": permission.level,
             "status": permission.status
         }
-        
+
         return ResponseUtils.success(data=permission_info, message="创建权限成功")
     except HTTPException as e:
         raise e
@@ -187,7 +207,12 @@ def create_permission(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.put("/{permission_id}", response_model=AuthResponse, summary="更新权限信息", dependencies=[Depends(permission_dependency("permission:update"))])
+@router.put(
+    "/{permission_id}",
+    response_model=AuthResponse,
+    summary="更新权限信息",
+    dependencies=[Depends(permission_dependency("permission:update"))]
+)
 def update_permission(
     permission_id: int,
     permission_data: PermissionUpdate,
@@ -199,7 +224,7 @@ def update_permission(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         permission = permission_service.update_permission(permission_id, permission_data.model_dump(), tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         permission_info = {
             "id": permission.id,
             "name": permission.name,
@@ -214,7 +239,7 @@ def update_permission(
             "level": permission.level,
             "status": permission.status
         }
-        
+
         return ResponseUtils.success(data=permission_info, message="更新权限信息成功")
     except HTTPException as e:
         raise e
@@ -225,7 +250,12 @@ def update_permission(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.post("/batch", response_model=AuthResponse, summary="批量创建权限", dependencies=[Depends(permission_dependency("permission:create"))])
+@router.post(
+    "/batch",
+    response_model=AuthResponse,
+    summary="批量创建权限",
+    dependencies=[Depends(permission_dependency("permission:create"))]
+)
 def batch_create_permissions(
     permissions_data: List[PermissionCreate],
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -236,11 +266,11 @@ def batch_create_permissions(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         created_permissions = []
-        
+
         for perm_data in permissions_data:
             permission = permission_service.create_permission(perm_data.model_dump(), tenant_id=tenant_id, created_by=current_user.id)
             created_permissions.append(permission)
-        
+
         permission_list = []
         for perm in created_permissions:
             permission_list.append({
@@ -250,7 +280,7 @@ def batch_create_permissions(
                 "type": perm.type,
                 "status": perm.status
             })
-        
+
         return ResponseUtils.success(
             data={
                 "created_count": len(created_permissions),
@@ -264,7 +294,12 @@ def batch_create_permissions(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.delete("/batch", response_model=AuthResponse, summary="批量删除权限", dependencies=[Depends(permission_dependency("permission:delete"))])
+@router.delete(
+    "/batch",
+    response_model=AuthResponse,
+    summary="批量删除权限",
+    dependencies=[Depends(permission_dependency("permission:delete"))]
+)
 def batch_delete_permissions(
     permission_ids: List[int] = Query(..., description="权限ID列表"),
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -275,14 +310,14 @@ def batch_delete_permissions(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         deleted_count = 0
-        
+
         for perm_id in permission_ids:
             try:
                 permission_service.delete_permission(perm_id, tenant_id=tenant_id)
                 deleted_count += 1
             except Exception:
                 continue
-        
+
         return ResponseUtils.success(
             data={
                 "total_count": len(permission_ids),
@@ -297,7 +332,12 @@ def batch_delete_permissions(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.delete("/{permission_id}", response_model=AuthResponse, summary="删除权限", dependencies=[Depends(permission_dependency("permission:delete"))])
+@router.delete(
+    "/{permission_id}",
+    response_model=AuthResponse,
+    summary="删除权限",
+    dependencies=[Depends(permission_dependency("permission:delete"))]
+)
 def delete_permission(
     permission_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -308,7 +348,7 @@ def delete_permission(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         permission_service.delete_permission(permission_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除权限成功")
     except HTTPException as e:
         raise e
@@ -316,7 +356,12 @@ def delete_permission(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.put("/{permission_id}/status", response_model=AuthResponse, summary="更新权限状态", dependencies=[Depends(permission_dependency("permission:update"))])
+@router.put(
+    "/{permission_id}/status",
+    response_model=AuthResponse,
+    summary="更新权限状态",
+    dependencies=[Depends(permission_dependency("permission:update"))]
+)
 def update_permission_status(
     permission_id: int,
     status: int,
@@ -328,13 +373,13 @@ def update_permission_status(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         permission = permission_service.update_permission_status(permission_id, status, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         permission_info = {
             "id": permission.id,
             "name": permission.name,
             "status": permission.status
         }
-        
+
         return ResponseUtils.success(data=permission_info, message="更新权限状态成功")
     except HTTPException as e:
         raise e
@@ -342,7 +387,12 @@ def update_permission_status(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{permission_id}/roles", response_model=AuthResponse, summary="获取权限关联的角色列表", dependencies=[Depends(permission_dependency("permission:view"))])
+@router.get(
+    "/{permission_id}/roles",
+    response_model=AuthResponse,
+    summary="获取权限关联的角色列表",
+    dependencies=[Depends(permission_dependency("permission:view"))]
+)
 def get_permission_roles(
     permission_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -353,7 +403,7 @@ def get_permission_roles(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         roles = permission_service.get_permission_roles(permission_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(
             data={
                 "permission_id": permission_id,
@@ -367,7 +417,12 @@ def get_permission_roles(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{permission_id}/role-count", response_model=AuthResponse, summary="统计权限关联的角色数量", dependencies=[Depends(permission_dependency("permission:view"))])
+@router.get(
+    "/{permission_id}/role-count",
+    response_model=AuthResponse,
+    summary="统计权限关联的角色数量",
+    dependencies=[Depends(permission_dependency("permission:view"))]
+)
 def count_permission_roles(
     permission_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -378,7 +433,7 @@ def count_permission_roles(
         current_user, tenant_id = current_user_with_tenant
         permission_service = PermissionService(db)
         role_count = permission_service.count_permission_roles(permission_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(
             data={
                 "permission_id": permission_id,

@@ -42,7 +42,7 @@ class UserProfileResponse(UserProfileBase):
     user_id: int = Field(..., description="用户ID")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -51,7 +51,7 @@ class UserProfileResponse(UserProfileBase):
 class UserProfileWithUserResponse(UserProfileResponse):
     """用户资料带用户信息响应模型"""
     user: Optional[dict] = Field(None, description="用户信息")
-    
+
     model_config = {
         "from_attributes": True
     }

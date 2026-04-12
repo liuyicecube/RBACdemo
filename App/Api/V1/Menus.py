@@ -36,7 +36,7 @@ def get_menus(
     try:
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
-        
+
         total, menus = menu_service.paginate_menus(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -45,7 +45,7 @@ def get_menus(
             page=page,
             page_size=page_size
         )
-        
+
         menu_list = []
         for menu in menus:
             menu_list.append({
@@ -63,7 +63,7 @@ def get_menus(
                 "create_time": menu.create_time.isoformat() if hasattr(menu.create_time, 'isoformat') else menu.create_time,
                 "update_time": menu.update_time.isoformat() if hasattr(menu.update_time, 'isoformat') else menu.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=menu_list,
             total=total,
@@ -90,7 +90,7 @@ def get_menu_tree(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         tree = menu_service.get_menu_tree(tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(data=tree, message="获取菜单树形结构成功")
     except HTTPException as e:
         raise e
@@ -102,6 +102,7 @@ def get_menu_tree(
 
 
 @router.get("/user", response_model=AuthResponse, summary="获取当前用户菜单树")
+@router.get("/my", response_model=AuthResponse, summary="获取当前用户菜单树")
 def get_user_menu_tree(
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
     db: Session = Depends(get_db)
@@ -111,7 +112,7 @@ def get_user_menu_tree(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         tree = menu_service.get_user_menu_tree(current_user.id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(data=tree, message="获取用户菜单树成功")
     except HTTPException as e:
         raise e
@@ -133,7 +134,7 @@ def sort_menus(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         menu_service.sort_menus(request.get("menu_ids", []), tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="菜单排序成功")
     except HTTPException as e:
         raise e
@@ -155,7 +156,7 @@ def get_menu(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         menu = menu_service.get_menu_by_id(menu_id, tenant_id=tenant_id)
-        
+
         menu_info = {
             "id": menu.id,
             "name": menu.name,
@@ -171,7 +172,7 @@ def get_menu(
             "create_time": menu.create_time.isoformat() if hasattr(menu.create_time, 'isoformat') else menu.create_time,
             "update_time": menu.update_time.isoformat() if hasattr(menu.update_time, 'isoformat') else menu.update_time
         }
-        
+
         return ResponseUtils.success(data=menu_info, message="获取菜单详情成功")
     except HTTPException as e:
         raise e
@@ -193,7 +194,7 @@ def create_menu(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         menu = menu_service.create_menu(menu_data.model_dump(), tenant_id=tenant_id, created_by=current_user.id)
-        
+
         menu_info = {
             "id": menu.id,
             "name": menu.name,
@@ -207,7 +208,7 @@ def create_menu(
             "sort": menu.sort,
             "status": menu.status
         }
-        
+
         return ResponseUtils.success(data=menu_info, message="创建菜单成功")
     except HTTPException as e:
         raise e
@@ -230,7 +231,7 @@ def update_menu(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         menu = menu_service.update_menu(menu_id, menu_data.model_dump(), tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         menu_info = {
             "id": menu.id,
             "name": menu.name,
@@ -244,7 +245,7 @@ def update_menu(
             "sort": menu.sort,
             "status": menu.status
         }
-        
+
         return ResponseUtils.success(data=menu_info, message="更新菜单信息成功")
     except HTTPException as e:
         raise e
@@ -266,7 +267,7 @@ def delete_menu(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         menu_service.delete_menu(menu_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除菜单成功")
     except HTTPException as e:
         raise e
@@ -289,13 +290,13 @@ def update_menu_status(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         menu = menu_service.update_menu_status(menu_id, status, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         menu_info = {
             "id": menu.id,
             "name": menu.name,
             "status": menu.status
         }
-        
+
         return ResponseUtils.success(data=menu_info, message="更新菜单状态成功")
     except HTTPException as e:
         raise e
@@ -317,7 +318,7 @@ def get_menu_children(
         current_user, tenant_id = current_user_with_tenant
         menu_service = MenuService(db)
         children_menus = menu_service.get_menu_children(menu_id, tenant_id=tenant_id)
-        
+
         children_list = []
         for menu in children_menus:
             children_list.append({
@@ -333,7 +334,7 @@ def get_menu_children(
                 "sort": menu.sort,
                 "status": menu.status
             })
-        
+
         return ResponseUtils.success(
             data={
                 "menu_id": menu_id,

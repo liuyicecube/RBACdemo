@@ -40,7 +40,7 @@ class RoleResponse(RoleBase):
     status: int = Field(..., ge=0, le=1, description="状态(0:禁用,1:启用)")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -65,7 +65,7 @@ class RolePermissionResponse(BaseModel):
     action: str = Field(..., description="操作类型(view, create, update, delete, export)")
     path: Optional[str] = Field(None, description="访问路径(API路径或菜单路径)")
     method: Optional[str] = Field(None, description="请求方法(GET, POST, PUT, DELETE等)")
-    
+
     model_config = {
         "from_attributes": True
     }

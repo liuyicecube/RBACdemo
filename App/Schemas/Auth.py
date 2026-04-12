@@ -1,7 +1,7 @@
 """Authentication Schema"""
 
 from pydantic import BaseModel, Field, EmailStr
-from typing import Optional, Dict, Any
+from typing import Optional, Any
 from datetime import datetime
 
 
@@ -70,5 +70,5 @@ class AuthResponse(BaseModel):
     """认证响应模型"""
     code: int = Field(200, description="响应码")
     message: str = Field("操作成功", description="响应消息")
-    data: Optional[Dict[str, Any]] = Field(None, description="响应数据")
+    data: Optional[Any] = Field(None, description="响应数据")
     timestamp: datetime = Field(datetime.now(), description="响应时间")

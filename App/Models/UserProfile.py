@@ -7,12 +7,12 @@ from App.Models.Base import BaseModel
 
 class UserProfileModel(BaseModel):
     """用户扩展信息模型"""
-    
+
     __tablename__ = "sys_user_profile"
     __table_args__ = (
         Index('idx_profile_user', 'user_id'),
     )
-    
+
     id = Column(Integer, primary_key=True, autoincrement=True, comment="主键ID")
     user_id = Column(Integer, ForeignKey("sys_user.id"), unique=True, nullable=False, comment="用户ID")
     gender = Column(Integer, nullable=True, comment="性别(0:未知,1:男,2:女)")
@@ -24,8 +24,8 @@ class UserProfileModel(BaseModel):
     position = Column(String(50), nullable=True, comment="职位")
     entry_date = Column(Date, nullable=True, comment="入职日期")
     remark = Column(Text, nullable=True, comment="备注")
-    
+
     user = relationship("UserModel", back_populates="profile")
-    
+
     def __repr__(self):
         return f"<UserProfileModel(user_id={self.user_id})>"

@@ -19,7 +19,12 @@ router = APIRouter(
 )
 
 
-@router.get("", response_model=AuthResponse, summary="获取用户会话列表", dependencies=[Depends(permission_dependency("user_session:view"))])
+@router.get(
+    "",
+    response_model=AuthResponse,
+    summary="获取用户会话列表",
+    dependencies=[Depends(permission_dependency("user_session:view"))]
+)
 def get_user_sessions(
     user_id: int = None,
     device_type: str = None,
@@ -34,7 +39,7 @@ def get_user_sessions(
     try:
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
-        
+
         total, sessions = session_service.paginate_sessions(
             tenant_id=tenant_id,
             user_id=user_id,
@@ -44,7 +49,7 @@ def get_user_sessions(
             page=page,
             page_size=page_size
         )
-        
+
         session_list = []
         for session in sessions:
             session_list.append({
@@ -61,7 +66,7 @@ def get_user_sessions(
                 "create_time": session.create_time.isoformat() if hasattr(session.create_time, 'isoformat') else session.create_time,
                 "update_time": session.update_time.isoformat() if hasattr(session.update_time, 'isoformat') else session.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=session_list,
             total=total,
@@ -78,7 +83,12 @@ def get_user_sessions(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/online", response_model=AuthResponse, summary="获取在线用户会话", dependencies=[Depends(permission_dependency("user_session:view"))])
+@router.get(
+    "/online",
+    response_model=AuthResponse,
+    summary="获取在线用户会话",
+    dependencies=[Depends(permission_dependency("user_session:view"))]
+)
 def get_online_sessions(
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
     db: Session = Depends(get_db)
@@ -88,7 +98,7 @@ def get_online_sessions(
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
         sessions = session_service.get_all_active_sessions(tenant_id=tenant_id)
-        
+
         session_list = []
         for session in sessions:
             session_list.append({
@@ -101,7 +111,7 @@ def get_online_sessions(
                 "login_time": session.login_time.isoformat() if hasattr(session.login_time, 'isoformat') else session.login_time,
                 "last_active_time": session.last_active_time.isoformat() if hasattr(session.last_active_time, 'isoformat') else session.last_active_time
             })
-        
+
         return ResponseUtils.success(
             data={
                 "total": len(session_list),
@@ -115,7 +125,12 @@ def get_online_sessions(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/user/{user_id}", response_model=AuthResponse, summary="获取指定用户的会话", dependencies=[Depends(permission_dependency("user_session:view"))])
+@router.get(
+    "/user/{user_id}",
+    response_model=AuthResponse,
+    summary="获取指定用户的会话",
+    dependencies=[Depends(permission_dependency("user_session:view"))]
+)
 def get_user_sessions_by_user_id(
     user_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -126,7 +141,7 @@ def get_user_sessions_by_user_id(
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
         sessions = session_service.get_sessions_by_user_id(user_id, tenant_id=tenant_id)
-        
+
         session_list = []
         for session in sessions:
             session_list.append({
@@ -140,7 +155,7 @@ def get_user_sessions_by_user_id(
                 "expire_time": session.expire_time.isoformat() if hasattr(session.expire_time, 'isoformat') else session.expire_time,
                 "status": session.status
             })
-        
+
         return ResponseUtils.success(
             data={
                 "user_id": user_id,
@@ -158,7 +173,12 @@ def get_user_sessions_by_user_id(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{session_id}", response_model=AuthResponse, summary="获取会话详情", dependencies=[Depends(permission_dependency("user_session:view"))])
+@router.get(
+    "/{session_id}",
+    response_model=AuthResponse,
+    summary="获取会话详情",
+    dependencies=[Depends(permission_dependency("user_session:view"))]
+)
 def get_user_session(
     session_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -169,7 +189,7 @@ def get_user_session(
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
         session = session_service.get_session_by_id(session_id, tenant_id=tenant_id)
-        
+
         session_info = {
             "id": session.id,
             "user_id": session.user_id,
@@ -184,7 +204,7 @@ def get_user_session(
             "create_time": session.create_time.isoformat() if hasattr(session.create_time, 'isoformat') else session.create_time,
             "update_time": session.update_time.isoformat() if hasattr(session.update_time, 'isoformat') else session.update_time
         }
-        
+
         return ResponseUtils.success(data=session_info, message="获取会话详情成功")
     except HTTPException as e:
         raise e
@@ -195,7 +215,12 @@ def get_user_session(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.delete("/{session_id}", response_model=AuthResponse, summary="删除会话", dependencies=[Depends(permission_dependency("user_session:delete"))])
+@router.delete(
+    "/{session_id}",
+    response_model=AuthResponse,
+    summary="删除会话",
+    dependencies=[Depends(permission_dependency("user_session:delete"))]
+)
 def delete_user_session(
     session_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -206,7 +231,7 @@ def delete_user_session(
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
         session_service.delete_session(session_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除会话成功")
     except HTTPException as e:
         raise e
@@ -214,7 +239,12 @@ def delete_user_session(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.post("/kick", response_model=AuthResponse, summary="踢人下线", dependencies=[Depends(permission_dependency("user_session:update"))])
+@router.post(
+    "/kick",
+    response_model=AuthResponse,
+    summary="踢人下线",
+    dependencies=[Depends(permission_dependency("user_session:update"))]
+)
 def kick_user(
     kick_data: KickUserRequest,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -225,7 +255,7 @@ def kick_user(
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
         result = session_service.kick_user(kick_data.session_ids, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(data=result, message="踢人下线成功")
     except HTTPException as e:
         raise e
@@ -236,7 +266,12 @@ def kick_user(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.post("/kick-user/{user_id}", response_model=AuthResponse, summary="踢用户所有会话下线", dependencies=[Depends(permission_dependency("user_session:update"))])
+@router.post(
+    "/kick-user/{user_id}",
+    response_model=AuthResponse,
+    summary="踢用户所有会话下线",
+    dependencies=[Depends(permission_dependency("user_session:update"))]
+)
 def kick_all_user_sessions(
     user_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -247,7 +282,7 @@ def kick_all_user_sessions(
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
         count = session_service.kick_all_user_sessions(user_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(
             data={
                 "user_id": user_id,
@@ -264,7 +299,12 @@ def kick_all_user_sessions(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.post("/clean-expired", response_model=AuthResponse, summary="清理过期会话", dependencies=[Depends(permission_dependency("user_session:delete"))])
+@router.post(
+    "/clean-expired",
+    response_model=AuthResponse,
+    summary="清理过期会话",
+    dependencies=[Depends(permission_dependency("user_session:delete"))]
+)
 def clean_expired_sessions(
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
     db: Session = Depends(get_db)
@@ -274,7 +314,7 @@ def clean_expired_sessions(
         current_user, tenant_id = current_user_with_tenant
         session_service = UserSessionService(db)
         count = session_service.clean_expired_sessions(tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(
             data={"cleaned_count": count},
             message="清理过期会话成功"

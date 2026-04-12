@@ -12,21 +12,21 @@ from App.Config.Settings import settings
 
 class LoggerUtils:
     """日志工具类"""
-    
+
     @staticmethod
     def setup_logger():
         """设置日志配置"""
         # 创建日志目录
         os.makedirs(settings.log_dir, exist_ok=True)
-        
+
         # 移除默认处理器
         loguru_logger.remove()
-        
+
         # 定义通用格式字符串，使用安全的方式访问extra字典
         def format_record(record):
             """格式化记录，处理缺失的键"""
             extra = record["extra"]
-            
+
             # 确保所有必要的键存在
             record["extra_request_id"] = extra.get("request_id", "-")
             record["extra_user_id"] = extra.get("user_id", "-")
@@ -36,9 +36,9 @@ class LoggerUtils:
             record["extra_response_time"] = extra.get("response_time", "-")
             record["extra_request_size"] = extra.get("request_size", "-")
             record["extra_response_size"] = extra.get("response_size", "-")
-            
+
             return record
-        
+
         # 添加控制台处理器
         loguru_logger.add(
             sink=lambda msg: print(msg, end=""),
@@ -47,7 +47,7 @@ class LoggerUtils:
             colorize=True,
             filter=format_record
         )
-        
+
         # 添加文件处理器
         loguru_logger.add(
             sink=os.path.join(settings.log_dir, "app.log"),
@@ -58,7 +58,7 @@ class LoggerUtils:
             compression="zip",
             filter=format_record
         )
-        
+
         # 添加错误日志处理器
         loguru_logger.add(
             sink=os.path.join(settings.log_dir, "error.log"),
@@ -69,7 +69,7 @@ class LoggerUtils:
             compression="zip",
             filter=format_record
         )
-        
+
         # 添加性能日志处理器
         loguru_logger.add(
             sink=os.path.join(settings.log_dir, "performance.log"),
@@ -80,9 +80,9 @@ class LoggerUtils:
             compression="zip",
             filter=format_record
         )
-        
+
         return loguru_logger
-    
+
     @staticmethod
     def log_performance(
         request_id: str,
@@ -106,12 +106,12 @@ class LoggerUtils:
             "request_size": request_size,
             "response_size": response_size
         }
-        
+
         loguru_logger.info(
             "Performance log",
             **extra
         )
-    
+
     @staticmethod
     def log_error(
         message: str,
@@ -133,7 +133,7 @@ class LoggerUtils:
                 request_id=request_id,
                 user_id=user_id
             )
-    
+
     @staticmethod
     def log_warning(
         message: str,
@@ -146,7 +146,7 @@ class LoggerUtils:
             request_id=request_id,
             user_id=user_id
         )
-    
+
     @staticmethod
     def log_info(
         message: str,

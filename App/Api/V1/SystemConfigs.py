@@ -35,7 +35,7 @@ def get_configs(
     try:
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
-        
+
         total, configs = config_service.paginate_configs(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -44,7 +44,7 @@ def get_configs(
             page=page,
             page_size=page_size
         )
-        
+
         config_list = []
         for config in configs:
             config_list.append({
@@ -60,7 +60,7 @@ def get_configs(
                 "create_time": config.create_time.isoformat() if hasattr(config.create_time, 'isoformat') else config.create_time,
                 "update_time": config.update_time.isoformat() if hasattr(config.update_time, 'isoformat') else config.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=config_list,
             total=total,
@@ -87,7 +87,7 @@ def get_config_groups(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         groups = config_service.get_config_groups(tenant_id)
-        
+
         return ResponseUtils.success(data=groups, message="获取配置分组列表成功")
     except HTTPException as e:
         raise e
@@ -108,7 +108,7 @@ def get_grouped_configs(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         grouped_configs = config_service.get_configs_grouped(tenant_id)
-        
+
         result = {}
         for group, configs in grouped_configs.items():
             result[group] = []
@@ -118,7 +118,7 @@ def get_grouped_configs(
                     "config_value": config.config_value,
                     "config_type": config.config_type
                 })
-        
+
         return ResponseUtils.success(data=result, message="获取分组配置成功")
     except HTTPException as e:
         raise e
@@ -139,11 +139,11 @@ def get_active_configs(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         configs = config_service.get_all_active_configs(tenant_id)
-        
+
         config_dict = {}
         for config in configs:
             config_dict[config.config_key] = config.config_value
-        
+
         return ResponseUtils.success(data=config_dict, message="获取活跃配置成功")
     except HTTPException as e:
         raise e
@@ -165,7 +165,7 @@ def get_config(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         config = config_service.get_config_by_id(config_id, tenant_id=tenant_id)
-        
+
         config_info = {
             "id": config.id,
             "config_key": config.config_key,
@@ -179,7 +179,7 @@ def get_config(
             "create_time": config.create_time.isoformat() if hasattr(config.create_time, 'isoformat') else config.create_time,
             "update_time": config.update_time.isoformat() if hasattr(config.update_time, 'isoformat') else config.update_time
         }
-        
+
         return ResponseUtils.success(data=config_info, message="获取配置详情成功")
     except HTTPException as e:
         raise e
@@ -201,7 +201,7 @@ def get_config_value(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         value = config_service.get_config_value(key, tenant_id)
-        
+
         return ResponseUtils.success(data={"key": key, "value": value}, message="获取配置值成功")
     except HTTPException as e:
         raise e
@@ -223,7 +223,7 @@ def create_config(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         config = config_service.create_config(config_data, tenant_id=tenant_id)
-        
+
         config_info = {
             "id": config.id,
             "config_key": config.config_key,
@@ -235,7 +235,7 @@ def create_config(
             "sort": config.sort,
             "status": config.status
         }
-        
+
         return ResponseUtils.success(data=config_info, message="创建配置成功")
     except HTTPException as e:
         raise e
@@ -258,7 +258,7 @@ def update_config(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         config = config_service.update_config(config_id, config_data, tenant_id=tenant_id)
-        
+
         config_info = {
             "id": config.id,
             "config_key": config.config_key,
@@ -270,7 +270,7 @@ def update_config(
             "sort": config.sort,
             "status": config.status
         }
-        
+
         return ResponseUtils.success(data=config_info, message="更新配置成功")
     except HTTPException as e:
         raise e
@@ -292,7 +292,7 @@ def delete_config(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         config_service.delete_config(config_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除配置成功")
     except HTTPException as e:
         raise e
@@ -314,7 +314,7 @@ def batch_update_configs(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         updated_configs = config_service.batch_update_configs(configs_data, tenant_id=tenant_id)
-        
+
         result = []
         for config in updated_configs:
             result.append({
@@ -322,7 +322,7 @@ def batch_update_configs(
                 "config_key": config.config_key,
                 "config_value": config.config_value
             })
-        
+
         return ResponseUtils.success(data=result, message="批量更新配置成功")
     except HTTPException as e:
         raise e
@@ -343,7 +343,7 @@ def refresh_config_cache(
         current_user, tenant_id = current_user_with_tenant
         config_service = SystemConfigService(db)
         config_service.refresh_cache(tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="刷新配置缓存成功")
     except HTTPException as e:
         raise e

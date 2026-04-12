@@ -34,14 +34,14 @@ def login(
     """用户登录接口"""
     try:
         client_ip = request.client.host
-        
+
         auth_service = AuthService(db)
         login_result = auth_service.login(
             username=login_data.username,
             password=login_data.password,
             ip=client_ip
         )
-        
+
         return ResponseUtils.success(data=login_result, message="登录成功")
     except HTTPException as e:
         raise e
@@ -66,7 +66,7 @@ def register(
             email=register_data.email,
             phone=register_data.phone
         )
-        
+
         return ResponseUtils.success(data={
             "id": user.id,
             "username": user.username,
@@ -91,7 +91,7 @@ def refresh_token(
         refresh_result = auth_service.refresh_token(
             refresh_token=refresh_data.refresh_token
         )
-        
+
         return ResponseUtils.success(data=refresh_result, message="Token刷新成功")
     except HTTPException as e:
         raise e
@@ -114,7 +114,7 @@ def change_password(
             new_password=password_data.new_password,
             tenant_id=current_user.tenant_id
         )
-        
+
         return ResponseUtils.success(data=None, message="密码修改成功")
     except HTTPException as e:
         raise e
@@ -138,7 +138,7 @@ def reset_password(
             tenant_id=tenant_id,
             updated_by=current_user.id
         )
-        
+
         return ResponseUtils.success(data=None, message="密码重置成功")
     except HTTPException as e:
         raise e
@@ -165,7 +165,7 @@ def get_profile(
             "last_login_time": current_user.last_login_time.isoformat() if hasattr(current_user.last_login_time, 'isoformat') else None,
             "last_login_ip": current_user.last_login_ip
         }
-        
+
         return ResponseUtils.success(data=user_info, message="获取用户信息成功")
     except HTTPException as e:
         raise e

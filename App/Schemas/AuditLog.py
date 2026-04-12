@@ -27,7 +27,7 @@ class AuditLogResponse(AuditLogBase):
     user_id: Optional[int] = Field(None, description="用户ID")
     username: Optional[str] = Field(None, max_length=50, description="用户名")
     create_time: datetime = Field(..., description="创建时间")
-    
+
     model_config = {
         "from_attributes": True
     }

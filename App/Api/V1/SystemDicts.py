@@ -36,7 +36,7 @@ def get_dicts(
     try:
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
-        
+
         total, dicts = dict_service.paginate_dicts(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -44,7 +44,7 @@ def get_dicts(
             page=page,
             page_size=page_size
         )
-        
+
         dict_list = []
         for d in dicts:
             dict_list.append({
@@ -57,7 +57,7 @@ def get_dicts(
                 "create_time": d.create_time.isoformat() if hasattr(d.create_time, 'isoformat') else d.create_time,
                 "update_time": d.update_time.isoformat() if hasattr(d.update_time, 'isoformat') else d.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=dict_list,
             total=total,
@@ -84,7 +84,7 @@ def get_active_dicts(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         dicts = dict_service.get_all_active_dicts(tenant_id)
-        
+
         dict_list = []
         for d in dicts:
             dict_list.append({
@@ -92,7 +92,7 @@ def get_active_dicts(
                 "name": d.name,
                 "code": d.code
             })
-        
+
         return ResponseUtils.success(data=dict_list, message="获取活跃字典列表成功")
     except HTTPException as e:
         raise e
@@ -114,7 +114,7 @@ def get_dict(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         dict_with_items = dict_service.get_dict_with_items(dict_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(data=dict_with_items.model_dump(), message="获取字典详情成功")
     except HTTPException as e:
         raise e
@@ -136,7 +136,7 @@ def get_dict_items_by_code(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         items = dict_service.get_dict_items_by_code(code, tenant_id)
-        
+
         item_list = []
         for item in items:
             item_list.append({
@@ -144,7 +144,7 @@ def get_dict_items_by_code(
                 "value": item.value,
                 "sort": item.sort
             })
-        
+
         return ResponseUtils.success(data=item_list, message="获取字典项成功")
     except HTTPException as e:
         raise e
@@ -166,7 +166,7 @@ def create_dict(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         dict_obj = dict_service.create_dict(dict_data, tenant_id=tenant_id)
-        
+
         dict_info = {
             "id": dict_obj.id,
             "name": dict_obj.name,
@@ -175,7 +175,7 @@ def create_dict(
             "sort": dict_obj.sort,
             "status": dict_obj.status
         }
-        
+
         return ResponseUtils.success(data=dict_info, message="创建字典成功")
     except HTTPException as e:
         raise e
@@ -198,7 +198,7 @@ def update_dict(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         dict_obj = dict_service.update_dict(dict_id, dict_data, tenant_id=tenant_id)
-        
+
         dict_info = {
             "id": dict_obj.id,
             "name": dict_obj.name,
@@ -207,7 +207,7 @@ def update_dict(
             "sort": dict_obj.sort,
             "status": dict_obj.status
         }
-        
+
         return ResponseUtils.success(data=dict_info, message="更新字典成功")
     except HTTPException as e:
         raise e
@@ -229,7 +229,7 @@ def delete_dict(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         dict_service.delete_dict(dict_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除字典成功")
     except HTTPException as e:
         raise e
@@ -252,7 +252,7 @@ def create_dict_item(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         item = dict_service.create_dict_item(dict_id, item_data, tenant_id=tenant_id)
-        
+
         item_info = {
             "id": item.id,
             "dict_id": item.dict_id,
@@ -262,7 +262,7 @@ def create_dict_item(
             "description": item.description,
             "status": item.status
         }
-        
+
         return ResponseUtils.success(data=item_info, message="创建字典项成功")
     except HTTPException as e:
         raise e
@@ -285,7 +285,7 @@ def update_dict_item(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         item = dict_service.update_dict_item(item_id, item_data, tenant_id=tenant_id)
-        
+
         item_info = {
             "id": item.id,
             "dict_id": item.dict_id,
@@ -295,7 +295,7 @@ def update_dict_item(
             "description": item.description,
             "status": item.status
         }
-        
+
         return ResponseUtils.success(data=item_info, message="更新字典项成功")
     except HTTPException as e:
         raise e
@@ -317,7 +317,7 @@ def delete_dict_item(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         dict_service.delete_dict_item(item_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除字典项成功")
     except HTTPException as e:
         raise e
@@ -339,7 +339,7 @@ def get_dict_items(
         current_user, tenant_id = current_user_with_tenant
         dict_service = SystemDictService(db)
         items = dict_service.get_dict_items_by_dict_id(dict_id, tenant_id=tenant_id)
-        
+
         item_list = []
         for item in items:
             item_list.append({
@@ -353,7 +353,7 @@ def get_dict_items(
                 "create_time": item.create_time.isoformat() if hasattr(item.create_time, 'isoformat') else item.create_time,
                 "update_time": item.update_time.isoformat() if hasattr(item.update_time, 'isoformat') else item.update_time
             })
-        
+
         return ResponseUtils.success(data=item_list, message="获取字典项列表成功")
     except HTTPException as e:
         raise e

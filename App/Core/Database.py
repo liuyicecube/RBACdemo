@@ -7,7 +7,7 @@ from App.Config.Database import SessionLocal
 
 class DatabaseCore:
     """数据库核心功能"""
-    
+
     @staticmethod
     def get_db() -> Generator[Session, None, None]:
         """获取数据库会话"""
@@ -16,7 +16,7 @@ class DatabaseCore:
             yield db
         finally:
             db.close()
-    
+
     @staticmethod
     def commit_rollback(db: Session) -> None:
         """提交或回滚事务"""

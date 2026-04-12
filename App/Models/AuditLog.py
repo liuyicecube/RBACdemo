@@ -6,7 +6,7 @@ from App.Models.Base import BaseModel
 
 class AuditLogModel(BaseModel):
     """审计日志模型"""
-    
+
     __tablename__ = "sys_audit_log"
     __table_args__ = (
         Index('idx_audit_table', 'table_name'),
@@ -15,7 +15,7 @@ class AuditLogModel(BaseModel):
         Index('idx_audit_user', 'user_id'),
         Index('idx_audit_create_time', 'create_time'),
     )
-    
+
     id = Column(Integer, primary_key=True, autoincrement=True, comment="主键ID")
     table_name = Column(String(100), nullable=False, comment="表名")
     record_id = Column(Integer, nullable=False, comment="记录ID")
@@ -26,6 +26,6 @@ class AuditLogModel(BaseModel):
     user_id = Column(Integer, nullable=True, comment="操作用户ID")
     username = Column(String(50), nullable=True, comment="操作用户名")
     change_reason = Column(String(500), nullable=True, comment="变更原因")
-    
+
     def __repr__(self):
         return f"<AuditLogModel(table={self.table_name}, operation={self.operation_type})>"

@@ -9,11 +9,11 @@ from App.Repositories.Base import BaseRepository
 
 class DepartmentRepository(BaseRepository[DepartmentModel]):
     """部门仓储类"""
-    
+
     def __init__(self, db: Session):
         """初始化部门仓储"""
         super().__init__(db, DepartmentModel)
-    
+
     def get_by_code(self, code: str, tenant_id: int) -> Optional[DepartmentModel]:
         """根据部门编码获取部门"""
         return self.db.query(DepartmentModel).filter(
@@ -21,7 +21,7 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             DepartmentModel.tenant_id == tenant_id,
             DepartmentModel.is_deleted == 0
         ).first()
-    
+
     def get_by_name(self, name: str, tenant_id: int) -> Optional[DepartmentModel]:
         """根据部门名称获取部门"""
         return self.db.query(DepartmentModel).filter(
@@ -29,7 +29,7 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             DepartmentModel.tenant_id == tenant_id,
             DepartmentModel.is_deleted == 0
         ).first()
-    
+
     def get_by_parent_id(self, parent_id: int, tenant_id: int, skip: int = 0, limit: int = 100) -> List[DepartmentModel]:
         """根据父部门ID获取子部门"""
         return self.db.query(DepartmentModel).filter(
@@ -38,7 +38,7 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             DepartmentModel.is_deleted == 0,
             DepartmentModel.status == 1
         ).offset(skip).limit(limit).all()
-    
+
     def get_root_departments(self, tenant_id: int, skip: int = 0, limit: int = 100) -> List[DepartmentModel]:
         """获取根部门"""
         return self.db.query(DepartmentModel).filter(
@@ -47,7 +47,7 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             DepartmentModel.is_deleted == 0,
             DepartmentModel.status == 1
         ).offset(skip).limit(limit).all()
-    
+
     def search(self, keyword: str, tenant_id: int, skip: int = 0, limit: int = 100) -> List[DepartmentModel]:
         """搜索部门"""
         return self.db.query(DepartmentModel).filter(
@@ -60,7 +60,7 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             DepartmentModel.is_deleted == 0,
             DepartmentModel.status == 1
         ).offset(skip).limit(limit).all()
-    
+
     def get_active_departments(self, tenant_id: int, skip: int = 0, limit: int = 100) -> List[DepartmentModel]:
         """获取活跃部门"""
         return self.db.query(DepartmentModel).filter(
@@ -68,7 +68,7 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             DepartmentModel.is_deleted == 0,
             DepartmentModel.status == 1
         ).offset(skip).limit(limit).all()
-    
+
     def get_department_children_ids(self, department_id: int, tenant_id: int) -> List[int]:
         """获取部门的所有子部门ID"""
         # 递归获取所有子部门ID
@@ -82,9 +82,9 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             for child_id in children_ids:
                 children_ids.extend(_get_children_ids(child_id))
             return children_ids
-        
+
         return _get_children_ids(department_id)
-    
+
     def paginate(
         self,
         tenant_id: int,
@@ -98,7 +98,7 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
             DepartmentModel.tenant_id == tenant_id,
             DepartmentModel.is_deleted == 0
         )
-        
+
         if keyword:
             query = query.filter(
                 or_(
@@ -106,11 +106,11 @@ class DepartmentRepository(BaseRepository[DepartmentModel]):
                     DepartmentModel.code.like(f"%{keyword}%")
                 )
             )
-        
+
         if status is not None:
             query = query.filter(DepartmentModel.status == status)
-        
+
         total = query.count()
         items = query.order_by(DepartmentModel.create_time.desc()).offset((page - 1) * page_size).limit(page_size).all()
-        
+
         return total, items

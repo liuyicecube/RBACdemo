@@ -13,19 +13,19 @@ import hashlib
 
 class OperationLogService:
     """操作日志服务类"""
-    
+
     def __init__(self, db: Session):
         """初始化操作日志服务"""
         self.db = db
         self.operation_log_repository = OperationLogRepository(db)
-    
+
     def get_log_by_id(self, log_id: int, tenant_id: Optional[int] = None) -> OperationLogModel:
         """根据ID获取日志"""
         log = self.operation_log_repository.get_by_id(log_id, tenant_id=tenant_id)
         if not log:
             raise NotFoundException(detail="日志不存在")
         return log
-    
+
     def create_log(self, log_create: OperationLogCreate, tenant_id: int) -> OperationLogModel:
         """创建日志"""
         log = OperationLogModel(
@@ -43,21 +43,21 @@ class OperationLogService:
             error_message=log_create.error_msg,
             execution_time=log_create.execution_time
         )
-        
+
         return self.operation_log_repository.create(log)
-    
+
     def get_logs_by_user(self, user_id: int, tenant_id: int, page: int = 1, page_size: int = 20) -> Tuple[int, List[OperationLogModel]]:
         """根据用户获取日志"""
         query = self.db.query(OperationLogModel).filter(
             OperationLogModel.user_id == user_id,
             OperationLogModel.tenant_id == tenant_id
         )
-        
+
         total = query.count()
         items = query.order_by(OperationLogModel.create_time.desc()).offset((page - 1) * page_size).limit(page_size).all()
-        
+
         return total, items
-    
+
     def paginate_logs(
         self,
         tenant_id: int,
@@ -82,39 +82,39 @@ class OperationLogService:
             page=page,
             page_size=page_size
         )
-    
+
     def delete_old_logs(self, days: int, tenant_id: int):
         """删除旧日志"""
         self.operation_log_repository.delete_old_logs(days, tenant_id)
-    
+
     def get_statistics(self, tenant_id: int, days: int = 7) -> dict:
         """获取统计数据"""
         from datetime import datetime, timedelta
         end_time = datetime.now()
         start_time = end_time - timedelta(days=days)
-        
+
         total_logs = self.db.query(OperationLogModel).filter(
             OperationLogModel.tenant_id == tenant_id,
             OperationLogModel.create_time >= start_time,
             OperationLogModel.create_time <= end_time
         ).count()
-        
+
         success_logs = self.db.query(OperationLogModel).filter(
             OperationLogModel.tenant_id == tenant_id,
             OperationLogModel.status == 1,
             OperationLogModel.create_time >= start_time,
             OperationLogModel.create_time <= end_time
         ).count()
-        
+
         failed_logs = total_logs - success_logs
-        
+
         return {
             "total_logs": total_logs,
             "success_logs": success_logs,
             "failed_logs": failed_logs,
             "success_rate": round(success_logs / total_logs * 100, 2) if total_logs > 0 else 0
         }
-    
+
     def create_log_enhanced(
         self,
         tenant_id: int,
@@ -151,7 +151,7 @@ class OperationLogService:
             "execution_time": execution_time,
             "user_agent": user_agent
         }
-        
+
         if extra:
             extra_data = extra.copy()
             if request_id:
@@ -160,15 +160,15 @@ class OperationLogService:
                 "original": log_params["request_params"],
                 "extra": extra_data
             }) if log_params["request_params"] else json.dumps({"extra": extra_data})
-        
+
         log = OperationLogModel(**log_params)
         return self.operation_log_repository.create(log)
-    
+
     def _mask_sensitive_params(self, params: Optional[str]) -> Optional[str]:
         """掩码敏感参数"""
         if not params:
             return params
-        
+
         try:
             data = json.loads(params)
             if isinstance(data, dict):
@@ -179,27 +179,27 @@ class OperationLogService:
                 return json.dumps(data, ensure_ascii=False)
         except Exception:
             pass
-        
+
         return params
-    
+
     def _mask_sensitive_data(self, data: Optional[str]) -> Optional[str]:
         """掩码敏感数据"""
         if not data:
             return data
-        
+
         if "password" in data.lower() or "token" in data.lower():
             return "*** 包含敏感数据已隐藏 ***"
-        
+
         return data
-    
+
     def get_top_modules(self, tenant_id: int, days: int = 7, limit: int = 10) -> List[Dict[str, Any]]:
         """获取热门操作模块"""
         from datetime import datetime, timedelta
         from sqlalchemy import func
-        
+
         end_time = datetime.now()
         start_time = end_time - timedelta(days=days)
-        
+
         result = self.db.query(
             OperationLogModel.module,
             func.count(OperationLogModel.id).label("count")
@@ -210,17 +210,17 @@ class OperationLogService:
         ).group_by(OperationLogModel.module).order_by(
             func.count(OperationLogModel.id).desc()
         ).limit(limit).all()
-        
+
         return [{"module": r[0], "count": r[1]} for r in result]
-    
+
     def get_user_activity(self, tenant_id: int, days: int = 7) -> List[Dict[str, Any]]:
         """获取用户活跃情况"""
         from datetime import datetime, timedelta
         from sqlalchemy import func
-        
+
         end_time = datetime.now()
         start_time = end_time - timedelta(days=days)
-        
+
         result = self.db.query(
             OperationLogModel.username,
             func.count(OperationLogModel.id).label("count")
@@ -231,5 +231,5 @@ class OperationLogService:
         ).group_by(OperationLogModel.username).order_by(
             func.count(OperationLogModel.id).desc()
         ).limit(20).all()
-        
+
         return [{"username": r[0], "count": r[1]} for r in result]

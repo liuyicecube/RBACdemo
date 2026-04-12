@@ -40,7 +40,7 @@ def get_users(
     try:
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
-        
+
         total, users = user_service.paginate_users(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -49,7 +49,7 @@ def get_users(
             page=page,
             page_size=page_size
         )
-        
+
         user_list = []
         for user in users:
             user_list.append({
@@ -66,7 +66,7 @@ def get_users(
                 "create_time": user.create_time.isoformat() if hasattr(user.create_time, 'isoformat') else user.create_time,
                 "update_time": user.update_time.isoformat() if hasattr(user.update_time, 'isoformat') else user.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=user_list,
             total=total,
@@ -94,7 +94,7 @@ def get_user(
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
         user = user_service.get_user_by_id(user_id, tenant_id=tenant_id)
-        
+
         user_info = {
             "id": user.id,
             "username": user.username,
@@ -109,7 +109,7 @@ def get_user(
             "create_time": user.create_time.isoformat() if hasattr(user.create_time, 'isoformat') else user.create_time,
             "update_time": user.update_time.isoformat() if hasattr(user.update_time, 'isoformat') else user.update_time
         }
-        
+
         return ResponseUtils.success(data=user_info, message="获取用户详情成功")
     except HTTPException as e:
         raise e
@@ -130,11 +130,11 @@ def create_user(
     try:
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
-        
+
         user_dict = user_data.model_dump()
-        
+
         user = user_service.create_user(user_dict, tenant_id=tenant_id, created_by=current_user.id)
-        
+
         user_info = {
             "id": user.id,
             "username": user.username,
@@ -145,7 +145,7 @@ def create_user(
             "department_id": user.department_id,
             "status": user.status
         }
-        
+
         return ResponseUtils.success(data=user_info, message="创建用户成功")
     except HTTPException as e:
         raise e
@@ -167,10 +167,10 @@ def update_user(
     try:
         current_user, tenant_id = current_user_with_tenant
         logger.info(f"更新用户接口被调用 - 用户ID: {user_id}, 数据: {user_data.model_dump()}")
-        
+
         user_service = UserService(db)
         user = user_service.update_user(user_id, user_data.model_dump(), tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         user_info = {
             "id": user.id,
             "username": user.username,
@@ -181,7 +181,7 @@ def update_user(
             "department_id": user.department_id,
             "status": user.status
         }
-        
+
         return ResponseUtils.success(data=user_info, message="更新用户信息成功")
     except HTTPException as e:
         raise e
@@ -203,7 +203,7 @@ def delete_user(
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
         user_service.delete_user(user_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除用户成功")
     except HTTPException as e:
         raise e
@@ -223,16 +223,16 @@ def update_user_status(
         current_user, tenant_id = current_user_with_tenant
         if status is None:
             return ResponseUtils.error(message="缺少状态参数", code=400, error_code=40000)
-        
+
         user_service = UserService(db)
         user = user_service.update_user_status(user_id, status, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         user_info = {
             "id": user.id,
             "username": user.username,
             "status": user.status
         }
-        
+
         return ResponseUtils.success(data=user_info, message="更新用户状态成功")
     except HTTPException as e:
         raise e
@@ -256,17 +256,17 @@ async def upload_avatar(
             allowed_extensions = allowed_extensions.split(",")
         if file_extension not in allowed_extensions:
             return ResponseUtils.error(message=f"不支持的文件类型，仅支持{','.join(allowed_extensions)}", code=400, error_code=40000)
-        
+
         import os
         import uuid
         file_name = f"{uuid.uuid4()}.{file_extension}"
         file_path = os.path.join(settings.upload_dir, file_name)
-        
+
         os.makedirs(settings.upload_dir, exist_ok=True)
-        
+
         file_size = 0
         chunk_size = 1024 * 1024
-        
+
         with open(file_path, "wb") as f:
             while True:
                 chunk = await file.read(chunk_size)
@@ -277,16 +277,16 @@ async def upload_avatar(
                     os.remove(file_path)
                     return ResponseUtils.error(message=f"文件大小超过限制，最大支持{settings.max_file_size/1024/1024}MB", code=400, error_code=40000)
                 f.write(chunk)
-        
+
         user_service = UserService(db)
         user = user_service.update_user_avatar(user_id, file_path, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         user_info = {
             "id": user.id,
             "username": user.username,
             "avatar": user.avatar
         }
-        
+
         return ResponseUtils.success(data=user_info, message="上传头像成功")
     except HTTPException as e:
         raise e
@@ -305,7 +305,7 @@ def get_user_roles(
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
         roles = user_service.get_user_roles(user_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(
             data={
                 "user_id": user_id,
@@ -331,7 +331,7 @@ def assign_roles(
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
         user_service.assign_roles_to_user(user_id, role_data.role_ids, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         return ResponseUtils.success(message="分配角色成功")
     except HTTPException as e:
         raise e
@@ -351,7 +351,7 @@ def set_primary_role(
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
         user_service.set_primary_role(user_id, role_data.role_id, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         return ResponseUtils.success(message="设置主角色成功")
     except HTTPException as e:
         raise e
@@ -368,22 +368,22 @@ def get_current_user_permissions(
     try:
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
-        
+
         from App.Repositories.UserRoleRepository import UserRoleRepository
         from App.Repositories.RolePermissionRepository import RolePermissionRepository
-        
+
         user_role_repo = UserRoleRepository(db)
         role_permission_repo = RolePermissionRepository(db)
-        
+
         user_roles = user_role_repo.get_by_user_id(current_user.id, tenant_id=tenant_id)
-        
+
         permission_codes = set()
         for user_role in user_roles:
             role_permissions = role_permission_repo.get_by_role_id(user_role.role_id, tenant_id=tenant_id)
             for rp in role_permissions:
                 if rp.permission and hasattr(rp.permission, 'code'):
                     permission_codes.add(rp.permission.code)
-        
+
         return ResponseUtils.success(
             data=list(permission_codes),
             message="获取用户权限列表成功"
@@ -406,9 +406,9 @@ def get_current_user_roles(
     try:
         current_user, tenant_id = current_user_with_tenant
         user_service = UserService(db)
-        
+
         roles = user_service.get_user_roles(current_user.id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(
             data=roles,
             message="获取用户角色列表成功"

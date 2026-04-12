@@ -33,7 +33,7 @@ def serialize_data(data):
 
 class ResponseUtils:
     """响应工具类"""
-    
+
     @staticmethod
     def success(data: Any = None, message: str = "操作成功") -> JSONResponse:
         """成功响应"""
@@ -47,7 +47,7 @@ class ResponseUtils:
                 "timestamp": datetime.datetime.now().isoformat()
             }
         )
-    
+
     @staticmethod
     def created(data: Any = None, message: str = "创建成功") -> JSONResponse:
         """创建成功响应"""
@@ -60,7 +60,7 @@ class ResponseUtils:
                 "error_code": 0
             }
         )
-    
+
     @staticmethod
     def updated(data: Any = None, message: str = "更新成功") -> JSONResponse:
         """更新成功响应"""
@@ -73,7 +73,7 @@ class ResponseUtils:
                 "error_code": 0
             }
         )
-    
+
     @staticmethod
     def deleted(data: Any = None, message: str = "删除成功") -> JSONResponse:
         """删除成功响应"""
@@ -86,7 +86,7 @@ class ResponseUtils:
                 "error_code": 0
             }
         )
-    
+
     @staticmethod
     def bad_request(message: str = "请求参数错误", error_code: int = 40000) -> JSONResponse:
         """请求参数错误响应"""
@@ -99,7 +99,7 @@ class ResponseUtils:
                 "error_code": error_code
             }
         )
-    
+
     @staticmethod
     def unauthorized(message: str = "未授权访问", error_code: int = 40100) -> JSONResponse:
         """未授权响应"""
@@ -112,7 +112,7 @@ class ResponseUtils:
                 "error_code": error_code
             }
         )
-    
+
     @staticmethod
     def forbidden(message: str = "禁止访问", error_code: int = 40300) -> JSONResponse:
         """禁止访问响应"""
@@ -125,7 +125,7 @@ class ResponseUtils:
                 "error_code": error_code
             }
         )
-    
+
     @staticmethod
     def not_found(message: str = "资源不存在", error_code: int = 40400) -> JSONResponse:
         """资源不存在响应"""
@@ -138,7 +138,7 @@ class ResponseUtils:
                 "error_code": error_code
             }
         )
-    
+
     @staticmethod
     def internal_server_error(message: str = "服务器内部错误", error_code: int = 50000) -> JSONResponse:
         """服务器内部错误响应"""
@@ -151,7 +151,7 @@ class ResponseUtils:
                 "error_code": error_code
             }
         )
-    
+
     @staticmethod
     def conflict(message: str = "资源冲突", error_code: int = 40900) -> JSONResponse:
         """资源冲突响应"""
@@ -164,7 +164,7 @@ class ResponseUtils:
                 "error_code": error_code
             }
         )
-    
+
     @staticmethod
     def validation_error(message: str = "数据验证失败", error_code: int = 42200) -> JSONResponse:
         """数据验证失败响应"""
@@ -175,7 +175,7 @@ class ResponseUtils:
         except AttributeError:
             # 如果新常量不可用，回退到旧常量
             status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
-        
+
         return JSONResponse(
             status_code=status_code,
             content={
@@ -185,7 +185,7 @@ class ResponseUtils:
                 "error_code": error_code
             }
         )
-    
+
     @staticmethod
     def pagination(data: Any, total: int, page: int, page_size: int, message: str = "操作成功") -> JSONResponse:
         """分页响应"""
@@ -204,7 +204,7 @@ class ResponseUtils:
                 "error_code": 0
             }
         )
-    
+
     @staticmethod
     def error(message: str = "服务器内部错误", code: int = 500, error_code: int = 50000) -> JSONResponse:
         """错误响应"""

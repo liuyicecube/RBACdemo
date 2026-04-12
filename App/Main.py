@@ -26,9 +26,9 @@ async def lifespan(app: FastAPI):
     from App.Utils.CacheWarmup import warmup_cache
     warmup_cache()
     print("应用启动完成！")
-    
+
     yield
-    
+
     # 关闭事件
     print("应用关闭中...")
     print("应用关闭完成！")
@@ -54,10 +54,10 @@ original_openapi = app.openapi
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
-    
+
     # 获取默认的OpenAPI schema，使用原始方法
     openapi_schema = original_openapi()
-    
+
     # 添加Bearer认证方案
     openapi_schema["components"]["securitySchemes"] = {
         "BearerAuth": {
@@ -66,16 +66,16 @@ def custom_openapi():
             "bearerFormat": "JWT"
         }
     }
-    
+
     # 为所有路径添加安全要求
     for path in openapi_schema["paths"].values():
         for method in path.values():
             if "security" not in method:
                 method["security"] = [{"BearerAuth": []}]
-    
+
     # 全局安全要求
     openapi_schema["security"] = [{"BearerAuth": []}]
-    
+
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 

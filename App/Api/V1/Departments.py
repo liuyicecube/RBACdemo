@@ -21,7 +21,12 @@ router = APIRouter(
 )
 
 
-@router.get("", response_model=AuthResponse, summary="获取部门列表", dependencies=[Depends(permission_dependency("department:view"))])
+@router.get(
+    "",
+    response_model=AuthResponse,
+    summary="获取部门列表",
+    dependencies=[Depends(permission_dependency("department:view"))]
+)
 def get_departments(
     keyword: str = None,
     status: int = None,
@@ -35,7 +40,7 @@ def get_departments(
     try:
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
-        
+
         total, departments = department_service.paginate_departments(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -43,7 +48,7 @@ def get_departments(
             page=page,
             page_size=page_size
         )
-        
+
         department_list = []
         for dept in departments:
             department_list.append({
@@ -57,7 +62,7 @@ def get_departments(
                 "create_time": dept.create_time.isoformat() if hasattr(dept.create_time, 'isoformat') else dept.create_time,
                 "update_time": dept.update_time.isoformat() if hasattr(dept.update_time, 'isoformat') else dept.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=department_list,
             total=total,
@@ -74,7 +79,12 @@ def get_departments(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/tree", response_model=AuthResponse, summary="获取部门树形结构", dependencies=[Depends(permission_dependency("department:view"))])
+@router.get(
+    "/tree",
+    response_model=AuthResponse,
+    summary="获取部门树形结构",
+    dependencies=[Depends(permission_dependency("department:view"))]
+)
 def get_department_tree(
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
     db: Session = Depends(get_db)
@@ -84,7 +94,7 @@ def get_department_tree(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         tree = department_service.get_department_tree(tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(data=tree, message="获取部门树形结构成功")
     except HTTPException as e:
         raise e
@@ -95,7 +105,12 @@ def get_department_tree(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{department_id}", response_model=AuthResponse, summary="获取部门详情", dependencies=[Depends(permission_dependency("department:view"))])
+@router.get(
+    "/{department_id}",
+    response_model=AuthResponse,
+    summary="获取部门详情",
+    dependencies=[Depends(permission_dependency("department:view"))]
+)
 def get_department(
     department_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -106,7 +121,7 @@ def get_department(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         department = department_service.get_department_by_id(department_id, tenant_id=tenant_id)
-        
+
         department_info = {
             "id": department.id,
             "name": department.name,
@@ -118,7 +133,7 @@ def get_department(
             "create_time": department.create_time.isoformat() if hasattr(department.create_time, 'isoformat') else department.create_time,
             "update_time": department.update_time.isoformat() if hasattr(department.update_time, 'isoformat') else department.update_time
         }
-        
+
         return ResponseUtils.success(data=department_info, message="获取部门详情成功")
     except HTTPException as e:
         raise e
@@ -129,7 +144,12 @@ def get_department(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.post("", response_model=AuthResponse, summary="创建部门", dependencies=[Depends(permission_dependency("department:create"))])
+@router.post(
+    "",
+    response_model=AuthResponse,
+    summary="创建部门",
+    dependencies=[Depends(permission_dependency("department:create"))]
+)
 def create_department(
     department_data: DepartmentCreate,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -140,7 +160,7 @@ def create_department(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         department = department_service.create_department(department_data.model_dump(), tenant_id=tenant_id, created_by=current_user.id)
-        
+
         department_info = {
             "id": department.id,
             "name": department.name,
@@ -150,7 +170,7 @@ def create_department(
             "description": department.description,
             "status": department.status
         }
-        
+
         return ResponseUtils.success(data=department_info, message="创建部门成功")
     except HTTPException as e:
         raise e
@@ -161,7 +181,12 @@ def create_department(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.put("/{department_id}", response_model=AuthResponse, summary="更新部门信息", dependencies=[Depends(permission_dependency("department:update"))])
+@router.put(
+    "/{department_id}",
+    response_model=AuthResponse,
+    summary="更新部门信息",
+    dependencies=[Depends(permission_dependency("department:update"))]
+)
 def update_department(
     department_id: int,
     department_data: DepartmentUpdate,
@@ -173,7 +198,7 @@ def update_department(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         department = department_service.update_department(department_id, department_data.model_dump(), tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         department_info = {
             "id": department.id,
             "name": department.name,
@@ -183,7 +208,7 @@ def update_department(
             "description": department.description,
             "status": department.status
         }
-        
+
         return ResponseUtils.success(data=department_info, message="更新部门信息成功")
     except HTTPException as e:
         raise e
@@ -194,7 +219,12 @@ def update_department(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.delete("/{department_id}", response_model=AuthResponse, summary="删除部门", dependencies=[Depends(permission_dependency("department:delete"))])
+@router.delete(
+    "/{department_id}",
+    response_model=AuthResponse,
+    summary="删除部门",
+    dependencies=[Depends(permission_dependency("department:delete"))]
+)
 def delete_department(
     department_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -205,7 +235,7 @@ def delete_department(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         department_service.delete_department(department_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除部门成功")
     except HTTPException as e:
         raise e
@@ -213,7 +243,12 @@ def delete_department(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.put("/{department_id}/status", response_model=AuthResponse, summary="更新部门状态", dependencies=[Depends(permission_dependency("department:update"))])
+@router.put(
+    "/{department_id}/status",
+    response_model=AuthResponse,
+    summary="更新部门状态",
+    dependencies=[Depends(permission_dependency("department:update"))]
+)
 def update_department_status(
     department_id: int,
     status: int,
@@ -225,13 +260,13 @@ def update_department_status(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         department = department_service.update_department_status(department_id, status, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         department_info = {
             "id": department.id,
             "name": department.name,
             "status": department.status
         }
-        
+
         return ResponseUtils.success(data=department_info, message="更新部门状态成功")
     except HTTPException as e:
         raise e
@@ -239,7 +274,12 @@ def update_department_status(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{department_id}/children", response_model=AuthResponse, summary="获取部门的子部门列表", dependencies=[Depends(permission_dependency("department:view"))])
+@router.get(
+    "/{department_id}/children",
+    response_model=AuthResponse,
+    summary="获取部门的子部门列表",
+    dependencies=[Depends(permission_dependency("department:view"))]
+)
 def get_department_children(
     department_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -250,7 +290,7 @@ def get_department_children(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         children_departments = department_service.get_department_children(department_id, tenant_id=tenant_id)
-        
+
         children_list = []
         for dept in children_departments:
             children_list.append({
@@ -262,7 +302,7 @@ def get_department_children(
                 "description": dept.description,
                 "status": dept.status
             })
-        
+
         return ResponseUtils.success(
             data={
                 "department_id": department_id,
@@ -276,7 +316,12 @@ def get_department_children(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{department_id}/users", response_model=AuthResponse, summary="获取部门用户列表", dependencies=[Depends(permission_dependency("department:view"))])
+@router.get(
+    "/{department_id}/users",
+    response_model=AuthResponse,
+    summary="获取部门用户列表",
+    dependencies=[Depends(permission_dependency("department:view"))]
+)
 def get_department_users(
     department_id: int,
     page: int = 1,
@@ -290,7 +335,7 @@ def get_department_users(
         department_service = DepartmentService(db)
         users = department_service.get_department_users(department_id, tenant_id=tenant_id, page=page, page_size=page_size)
         total = department_service.count_department_users(department_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.pagination(
             data=users,
             total=total,
@@ -307,7 +352,12 @@ def get_department_users(
         return ResponseUtils.error(message=str(e), code=500, error_code=50000)
 
 
-@router.get("/{department_id}/user-count", response_model=AuthResponse, summary="统计部门用户数量", dependencies=[Depends(permission_dependency("department:view"))])
+@router.get(
+    "/{department_id}/user-count",
+    response_model=AuthResponse,
+    summary="统计部门用户数量",
+    dependencies=[Depends(permission_dependency("department:view"))]
+)
 def count_department_users(
     department_id: int,
     current_user_with_tenant = Depends(get_current_user_and_tenant_id),
@@ -318,7 +368,7 @@ def count_department_users(
         current_user, tenant_id = current_user_with_tenant
         department_service = DepartmentService(db)
         user_count = department_service.count_department_users(department_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(
             data={
                 "department_id": department_id,

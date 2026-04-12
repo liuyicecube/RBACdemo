@@ -39,7 +39,7 @@ class DataPermissionRuleResponse(DataPermissionRuleBase):
     status: int = Field(..., ge=0, le=1, description="状态(0:禁用,1:启用)")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -57,7 +57,7 @@ class DataPermissionRuleListResponse(BaseModel):
 class DataPermissionRuleWithPermissionResponse(DataPermissionRuleResponse):
     """数据权限规则带权限信息响应模型"""
     permission: Optional[dict] = Field(None, description="关联权限信息")
-    
+
     model_config = {
         "from_attributes": True
     }

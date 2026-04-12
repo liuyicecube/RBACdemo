@@ -36,14 +36,14 @@ def get_audit_logs(
     try:
         current_user, tenant_id = current_user_with_tenant
         log_service = AuditLogService(db)
-        
+
         start_datetime = None
         end_datetime = None
         if start_time:
             start_datetime = datetime.fromisoformat(start_time)
         if end_time:
             end_datetime = datetime.fromisoformat(end_time)
-        
+
         total, logs = log_service.paginate_logs(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -56,7 +56,7 @@ def get_audit_logs(
             page=page,
             page_size=page_size
         )
-        
+
         log_list = []
         for log in logs:
             log_list.append({
@@ -71,7 +71,7 @@ def get_audit_logs(
                 "change_fields": log.change_fields,
                 "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
             })
-        
+
         return ResponseUtils.pagination(
             data=log_list,
             total=total,
@@ -99,7 +99,7 @@ def get_audit_log_statistics(
         current_user, tenant_id = current_user_with_tenant
         log_service = AuditLogService(db)
         statistics = log_service.get_statistics(tenant_id, days)
-        
+
         return ResponseUtils.success(data=statistics, message="获取审计日志统计成功")
     except HTTPException as e:
         raise e
@@ -121,7 +121,7 @@ def get_audit_log(
         current_user, tenant_id = current_user_with_tenant
         log_service = AuditLogService(db)
         log = log_service.get_log_by_id(log_id, tenant_id=tenant_id)
-        
+
         log_info = {
             "id": log.id,
             "user_id": log.user_id,
@@ -134,7 +134,7 @@ def get_audit_log(
             "change_fields": log.change_fields,
             "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
         }
-        
+
         return ResponseUtils.success(data=log_info, message="获取审计日志详情成功")
     except HTTPException as e:
         raise e
@@ -159,7 +159,7 @@ def get_record_change_history(
         current_user, tenant_id = current_user_with_tenant
         log_service = AuditLogService(db)
         total, logs = log_service.get_logs_by_record(table_name, record_id, tenant_id, page, page_size)
-        
+
         log_list = []
         for log in logs:
             log_list.append({
@@ -172,7 +172,7 @@ def get_record_change_history(
                 "change_fields": log.change_fields,
                 "create_time": log.create_time.isoformat() if hasattr(log.create_time, 'isoformat') else log.create_time
             })
-        
+
         return ResponseUtils.pagination(
             data=log_list,
             total=total,
@@ -200,7 +200,7 @@ def cleanup_old_logs(
         current_user, tenant_id = current_user_with_tenant
         log_service = AuditLogService(db)
         log_service.delete_old_logs(days, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="清理旧日志成功")
     except HTTPException as e:
         raise e

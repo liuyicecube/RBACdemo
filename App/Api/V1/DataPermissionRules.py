@@ -37,7 +37,7 @@ def get_data_permission_rules(
     try:
         current_user, tenant_id = current_user_with_tenant
         rule_service = DataPermissionRuleService(db)
-        
+
         total, rules = rule_service.paginate_rules(
             tenant_id=tenant_id,
             keyword=keyword,
@@ -47,7 +47,7 @@ def get_data_permission_rules(
             page=page,
             page_size=page_size
         )
-        
+
         rule_list = []
         for rule in rules:
             rule_list.append({
@@ -63,7 +63,7 @@ def get_data_permission_rules(
                 "create_time": rule.create_time.isoformat() if hasattr(rule.create_time, 'isoformat') else rule.create_time,
                 "update_time": rule.update_time.isoformat() if hasattr(rule.update_time, 'isoformat') else rule.update_time
             })
-        
+
         return ResponseUtils.pagination(
             data=rule_list,
             total=total,
@@ -90,7 +90,7 @@ def get_all_active_rules(
         current_user, tenant_id = current_user_with_tenant
         rule_service = DataPermissionRuleService(db)
         rules = rule_service.get_active_rules(tenant_id=tenant_id)
-        
+
         rule_list = []
         for rule in rules:
             rule_list.append({
@@ -101,7 +101,7 @@ def get_all_active_rules(
                 "resource_table": rule.resource_table,
                 "rule_type": rule.rule_type
             })
-        
+
         return ResponseUtils.success(data=rule_list, message="获取所有启用的数据权限规则成功")
     except HTTPException as e:
         raise e
@@ -120,7 +120,7 @@ def get_data_permission_rule(
         current_user, tenant_id = current_user_with_tenant
         rule_service = DataPermissionRuleService(db)
         rule = rule_service.get_rule_by_id(rule_id, tenant_id=tenant_id)
-        
+
         rule_info = {
             "id": rule.id,
             "name": rule.name,
@@ -134,7 +134,7 @@ def get_data_permission_rule(
             "create_time": rule.create_time.isoformat() if hasattr(rule.create_time, 'isoformat') else rule.create_time,
             "update_time": rule.update_time.isoformat() if hasattr(rule.update_time, 'isoformat') else rule.update_time
         }
-        
+
         return ResponseUtils.success(data=rule_info, message="获取数据权限规则详情成功")
     except HTTPException as e:
         raise e
@@ -155,9 +155,9 @@ def create_data_permission_rule(
     try:
         current_user, tenant_id = current_user_with_tenant
         rule_service = DataPermissionRuleService(db)
-        
+
         rule = rule_service.create_rule(rule_data.model_dump(), tenant_id=tenant_id, created_by=current_user.id)
-        
+
         rule_info = {
             "id": rule.id,
             "name": rule.name,
@@ -166,7 +166,7 @@ def create_data_permission_rule(
             "resource_table": rule.resource_table,
             "rule_type": rule.rule_type
         }
-        
+
         return ResponseUtils.success(data=rule_info, message="创建数据权限规则成功")
     except HTTPException as e:
         raise e
@@ -189,7 +189,7 @@ def update_data_permission_rule(
         current_user, tenant_id = current_user_with_tenant
         rule_service = DataPermissionRuleService(db)
         rule = rule_service.update_rule(rule_id, rule_data.model_dump(exclude_unset=True), tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         rule_info = {
             "id": rule.id,
             "name": rule.name,
@@ -198,7 +198,7 @@ def update_data_permission_rule(
             "resource_table": rule.resource_table,
             "rule_type": rule.rule_type
         }
-        
+
         return ResponseUtils.success(data=rule_info, message="更新数据权限规则成功")
     except HTTPException as e:
         raise e
@@ -220,7 +220,7 @@ def delete_data_permission_rule(
         current_user, tenant_id = current_user_with_tenant
         rule_service = DataPermissionRuleService(db)
         rule_service.delete_rule(rule_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(message="删除数据权限规则成功")
     except HTTPException as e:
         raise e
@@ -240,16 +240,16 @@ def update_data_permission_rule_status(
         current_user, tenant_id = current_user_with_tenant
         if status is None:
             return ResponseUtils.error(message="缺少状态参数", code=400, error_code=40000)
-        
+
         rule_service = DataPermissionRuleService(db)
         rule = rule_service.update_rule_status(rule_id, status, tenant_id=tenant_id, updated_by=current_user.id)
-        
+
         rule_info = {
             "id": rule.id,
             "name": rule.name,
             "status": rule.status
         }
-        
+
         return ResponseUtils.success(data=rule_info, message="更新数据权限规则状态成功")
     except HTTPException as e:
         raise e
@@ -268,7 +268,7 @@ def test_data_permission_rule(
         current_user, tenant_id = current_user_with_tenant
         rule_service = DataPermissionRuleService(db)
         test_result = rule_service.test_rule(rule_id, tenant_id=tenant_id)
-        
+
         return ResponseUtils.success(data=test_result, message="测试数据权限规则成功")
     except HTTPException as e:
         raise e

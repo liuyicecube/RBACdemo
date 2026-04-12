@@ -33,7 +33,7 @@ class UserGroupResponse(UserGroupBase):
     status: int = Field(..., ge=0, le=1, description="状态(0:禁用,1:启用)")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -51,7 +51,7 @@ class UserGroupListResponse(BaseModel):
 class UserGroupWithUsersResponse(UserGroupResponse):
     """用户组带用户列表响应模型"""
     users: List[dict] = Field([], description="用户列表")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -60,7 +60,7 @@ class UserGroupWithUsersResponse(UserGroupResponse):
 class UserGroupWithRolesResponse(UserGroupResponse):
     """用户组带角色列表响应模型"""
     roles: List[dict] = Field([], description="角色列表")
-    
+
     model_config = {
         "from_attributes": True
     }

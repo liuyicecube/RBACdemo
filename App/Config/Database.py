@@ -34,7 +34,7 @@ if settings.database_url.startswith("mysql") and db_name:
         "password": parsed_url.password,
         "charset": "utf8mb4"
     }
-    
+
     try:
         # 连接到MySQL服务器（不指定数据库）
         connection = pymysql.connect(**db_config)

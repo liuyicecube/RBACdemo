@@ -46,7 +46,7 @@ class UserSessionResponse(BaseModel):
     status: int = Field(..., ge=0, le=1, description="状态(0:已失效,1:有效)")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -55,7 +55,7 @@ class UserSessionResponse(BaseModel):
 class UserSessionWithUserResponse(UserSessionResponse):
     """用户会话带用户信息响应模型"""
     user: Optional[dict] = Field(None, description="用户信息")
-    
+
     model_config = {
         "from_attributes": True
     }

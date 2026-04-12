@@ -7,7 +7,7 @@ from App.Models.Base import BaseModel
 
 class RoleModel(BaseModel):
     """角色模型"""
-    
+
     __tablename__ = "sys_role"
     __table_args__ = (
         Index('idx_role_status', 'status'),
@@ -15,7 +15,7 @@ class RoleModel(BaseModel):
         Index('idx_role_type', 'type'),
         Index('idx_role_tenant_status', 'tenant_id', 'status'),
     )
-    
+
     id = Column(Integer, primary_key=True, autoincrement=True, comment="主键ID")
     name = Column(String(50), unique=True, nullable=False, comment="角色名称")
     code = Column(String(50), unique=True, nullable=False, comment="角色编码")
@@ -26,11 +26,11 @@ class RoleModel(BaseModel):
     sort = Column(Integer, default=0, comment="排序")
     description = Column(String(255), nullable=True, comment="角色描述")
     status = Column(Integer, default=1, comment="状态(0:禁用,1:启用)")
-    
+
     # 关系定义
     user_roles = relationship("UserRoleModel", back_populates="role")
     role_permissions = relationship("RolePermissionModel", back_populates="role")
     user_group_role_relations = relationship("UserGroupRoleRelationModel", back_populates="role")
-    
+
     def __repr__(self):
         return f"<RoleModel(name={self.name}, code={self.code})>"

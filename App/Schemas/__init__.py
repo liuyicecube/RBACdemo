@@ -77,7 +77,7 @@ __all__ = [
     "BaseUpdateSchema",
     "BaseResponse",
     "PaginationResponse",
-    
+
     # Auth
     "LoginRequest",
     "RegisterRequest",
@@ -88,7 +88,7 @@ __all__ = [
     "UserInfoResponse",
     "LoginResponse",
     "AuthResponse",
-    
+
     # User
     "UserBase",
     "UserCreate",
@@ -100,7 +100,7 @@ __all__ = [
     "AssignRolesRequest",
     "SetPrimaryRoleRequest",
     "UserFilter",
-    
+
     # Role
     "RoleBase",
     "RoleCreate",
@@ -111,7 +111,7 @@ __all__ = [
     "RolePermissionsResponse",
     "AssignPermissionsRequest",
     "RoleFilter",
-    
+
     # Permission
     "PermissionBase",
     "PermissionCreate",
@@ -121,7 +121,7 @@ __all__ = [
     "PermissionRoleResponse",
     "PermissionRolesResponse",
     "PermissionFilter",
-    
+
     # Department
     "DepartmentBase",
     "DepartmentCreate",
@@ -130,7 +130,7 @@ __all__ = [
     "DepartmentListResponse",
     "DepartmentTreeResponse",
     "DepartmentFilter",
-    
+
     # Menu
     "MenuBase",
     "MenuCreate",

@@ -7,7 +7,7 @@ from App.Config.Database import Base
 
 class BaseModel(Base):
     """基础模型类，包含公共字段（除id外，id需要在每个模型中单独定义以确保顺序）"""
-    
+
     __abstract__ = True
     __table_args__ = (
         Index('idx_tenant_id', 'tenant_id'),
@@ -16,7 +16,7 @@ class BaseModel(Base):
         Index('idx_update_time', 'update_time'),
         Index('idx_tenant_deleted', 'tenant_id', 'is_deleted'),
     )
-    
+
     tenant_id = Column(Integer, nullable=True, comment="租户ID")
     create_time = Column(DateTime, default=func.now(), nullable=False, comment="创建时间")
     update_time = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False, comment="更新时间")

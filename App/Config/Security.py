@@ -14,7 +14,7 @@ pwd_context = CryptContext(
 
 class SecurityConfig:
     """Security configuration"""
-    
+
     @staticmethod
     def verify_password(plain_password: str, hashed_password: str) -> bool:
         """验证密码"""
@@ -22,12 +22,12 @@ class SecurityConfig:
             return pwd_context.verify(plain_password, hashed_password)
         except (ValueError, TypeError):
             return False
-    
+
     @staticmethod
     def get_password_hash(password: str) -> str:
         """获取密码哈希值"""
         return pwd_context.hash(password)
-    
+
     @staticmethod
     def generate_salt(length: int = 16) -> str:
         """生成随机盐值（保留方法但不使用）"""

@@ -40,7 +40,7 @@ class UserResponse(UserBase):
     last_login_ip: Optional[str] = Field(None, description="最后登录IP")
     create_time: datetime = Field(..., description="创建时间")
     update_time: datetime = Field(..., description="更新时间")
-    
+
     model_config = {
         "from_attributes": True
     }
@@ -62,7 +62,7 @@ class UserRoleResponse(BaseModel):
     code: str = Field(..., description="角色编码")
     type: int = Field(..., ge=0, le=3, description="角色类型(0:系统角色, 1:功能角色, 2:数据角色, 3:自定义角色)")
     is_primary: bool = Field(..., description="是否主角色")
-    
+
     model_config = {
         "from_attributes": True
     }
