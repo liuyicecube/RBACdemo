@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.page-container {
+  width: 100%;
+  height: 100%;
+}
+
+.card-header {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+.toolbar {
+  margin-bottom: 20px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.tree-table {
+  :deep(.el-table__expanded-cell) {
+    padding: 10px 20px !important;
+  }
+}

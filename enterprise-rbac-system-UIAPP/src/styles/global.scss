@@ -1,0 +1,64 @@
+@import './variables.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  height: 100%;
+  font-family: $font-family;
+  color: $text-primary;
+  background-color: $background-page;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $border-lighter;
+  border-radius: 3px;
+
+  &:hover {
+    background: $text-secondary;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $transition;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all $transition ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all $transition cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+.grow {
+  transition: transform $transition;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
